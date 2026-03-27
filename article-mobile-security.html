@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>אבטחת מידע בסלולרי | MorOfSec</title>
+<meta name="description" content="זיהוי אפליקציות מזויפות, הרשאות מסוכנות ועדכוני מערכת הפעלה. מאת אופיר שמשון, MorOfSec">
+<meta name="keywords" content="אבטחת סלולרי, אפליקציות מזויפות, הרשאות אפליקציה, עדכוני אנדרואיד, עדכוני iOS, אבטחת טלפון">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://morofsec.com/article-mobile-security.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#f0f4f8;--bg2:#e8edf3;--white:#fff;--heading:#0a1e2e;--text:#1a3040;--muted:#2d5068;--cyan:#005f8a;--teal:#00886a;--border:#d0dce8;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Heebo',sans-serif;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+nav{position:fixed;top:0;width:100%;z-index:100;padding:18px 0;backdrop-filter:blur(20px);border-bottom:1px solid var(--border);background:rgba(240,244,248,0.95);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding:0 40px;}
+.nav-logo{font-family:'Orbitron',monospace;font-size:1.4rem;font-weight:900;color:var(--heading);letter-spacing:2px;display:flex;align-items:center;gap:10px;}
+.nav-logo img{width:36px;height:36px;object-fit:contain;border-radius:50%;border:2px solid var(--cyan);background:var(--white);}
+.nav-logo span{color:var(--cyan);}
+.nav-back{display:flex;align-items:center;gap:8px;color:var(--cyan);font-weight:600;font-size:0.9rem;}
+.nav-back:hover{text-decoration:underline;}
+.container{max-width:860px;margin:0 auto;padding:0 40px;}
+.article-hero{padding:110px 0 50px;background:linear-gradient(135deg,#1a0a2e,#2d1a52);color:#fff;text-align:center;}
+.article-tag{display:inline-block;background:rgba(180,150,255,0.15);color:#c8b4ff;font-size:0.72rem;font-weight:700;letter-spacing:3px;padding:5px 14px;border-radius:20px;font-family:'Orbitron',monospace;text-transform:uppercase;margin-bottom:20px;}
+.article-hero h1{font-family:'Orbitron',monospace;font-size:1.7rem;font-weight:900;line-height:1.3;margin-bottom:16px;}
+.article-hero h1 span{color:#c8b4ff;}
+.article-meta{display:flex;align-items:center;justify-content:center;gap:24px;font-size:0.85rem;color:rgba(255,255,255,0.65);margin-top:20px;flex-wrap:wrap;}
+.article-body{padding:56px 0 80px;}
+.article-intro{font-size:1.05rem;color:var(--text);line-height:1.95;margin-bottom:48px;padding:24px 28px;background:var(--white);border-radius:8px;border-right:4px solid #5a2d9a;font-weight:500;}
+.section-h{font-family:'Orbitron',monospace;font-size:0.85rem;font-weight:800;color:var(--heading);letter-spacing:2px;text-transform:uppercase;margin:48px 0 20px;padding-bottom:10px;border-bottom:2px solid var(--border);}
+
+/* FAKE APPS */
+.fake-signs{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:24px;}
+.fake-sign{background:var(--white);border:2px solid var(--border);border-radius:8px;padding:18px;}
+.fake-sign-icon{font-size:1.5rem;margin-bottom:8px;}
+.fake-sign-title{font-weight:800;color:#8b0000;font-size:0.88rem;margin-bottom:6px;}
+.fake-sign-desc{font-size:0.84rem;color:var(--text);line-height:1.7;}
+
+.real-vs-fake{background:var(--white);border:2px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:24px;}
+.rvf-header{display:grid;grid-template-columns:1fr 1fr;border-bottom:2px solid var(--border);}
+.rvf-col{padding:12px 18px;font-family:'Orbitron',monospace;font-size:0.75rem;font-weight:800;letter-spacing:1px;}
+.rvf-col.real{color:var(--teal);background:rgba(0,136,106,0.06);}
+.rvf-col.fake{color:#8b0000;background:rgba(139,0,0,0.06);}
+.rvf-row{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);}
+.rvf-row:last-child{border-bottom:none;}
+.rvf-cell{padding:12px 18px;font-size:0.84rem;color:var(--text);line-height:1.6;}
+.rvf-cell.real{border-left:1px solid var(--border);}
+
+/* PERMISSIONS */
+.perm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px;}
+.perm-card{background:var(--white);border:2px solid var(--border);border-radius:8px;padding:16px;text-align:center;}
+.perm-card.danger{border-color:rgba(139,0,0,0.25);background:rgba(139,0,0,0.03);}
+.perm-card.warning{border-color:rgba(200,140,0,0.25);background:rgba(200,140,0,0.03);}
+.perm-card.safe{border-color:rgba(0,136,106,0.25);background:rgba(0,136,106,0.03);}
+.perm-icon{font-size:1.6rem;margin-bottom:8px;}
+.perm-name{font-weight:800;font-size:0.83rem;margin-bottom:4px;}
+.perm-card.danger .perm-name{color:#8b0000;}
+.perm-card.warning .perm-name{color:#c88c00;}
+.perm-card.safe .perm-name{color:var(--teal);}
+.perm-desc{font-size:0.78rem;color:var(--text);line-height:1.5;}
+
+.perm-rules{list-style:none;margin-bottom:24px;}
+.perm-rules li{background:var(--white);border:2px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:10px;font-size:0.87rem;color:var(--text);line-height:1.7;display:flex;gap:10px;}
+.perm-rules li::before{content:'🔍';flex-shrink:0;}
+
+/* UPDATES */
+.update-reasons{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:24px;}
+.update-reason{background:var(--white);border:2px solid var(--border);border-radius:8px;padding:18px;}
+.update-reason-icon{font-size:1.4rem;margin-bottom:8px;}
+.update-reason-title{font-weight:800;color:var(--heading);font-size:0.88rem;margin-bottom:6px;}
+.update-reason-desc{font-size:0.84rem;color:var(--text);line-height:1.7;}
+
+.platform-compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;}
+.platform-card{background:var(--white);border:2px solid var(--border);border-radius:8px;overflow:hidden;}
+.platform-header{padding:14px 18px;font-family:'Orbitron',monospace;font-size:0.78rem;font-weight:800;display:flex;align-items:center;gap:8px;}
+.platform-header.android{background:rgba(61,220,132,0.1);color:#1a8050;}
+.platform-header.ios{background:rgba(0,95,138,0.08);color:var(--cyan);}
+.platform-body{padding:16px 18px;}
+.platform-list{list-style:none;}
+.platform-list li{font-size:0.85rem;color:var(--text);padding:5px 0;border-bottom:1px solid var(--bg2);line-height:1.6;}
+.platform-list li:last-child{border-bottom:none;}
+.platform-list li::before{content:'✓ ';}
+
+.tip-box{background:rgba(0,136,106,0.07);border:1px solid rgba(0,136,106,0.25);border-radius:6px;padding:14px 18px;margin:16px 0;}
+.tip-box strong{color:var(--teal);font-size:0.85rem;display:block;margin-bottom:4px;font-family:'Orbitron',monospace;letter-spacing:1px;}
+.tip-box p{font-size:0.87rem;color:var(--text);line-height:1.7;margin:0;}
+
+.danger-box{background:rgba(139,0,0,0.05);border:2px solid rgba(139,0,0,0.2);border-radius:8px;padding:18px 22px;margin-bottom:20px;}
+.danger-box strong{color:#8b0000;display:block;margin-bottom:6px;font-size:0.88rem;font-family:'Orbitron',monospace;}
+.danger-box p{font-size:0.87rem;color:var(--text);line-height:1.8;}
+
+/* SUMMARY */
+.summary-box{background:linear-gradient(135deg,#1a0a2e,#2d1a52);border-radius:10px;padding:36px 32px;margin-top:48px;color:#fff;text-align:center;}
+.summary-box h3{font-family:'Orbitron',monospace;font-size:1rem;font-weight:800;margin-bottom:12px;color:#c8b4ff;}
+.summary-box p{font-size:0.92rem;color:rgba(255,255,255,0.85);line-height:1.8;margin-bottom:20px;}
+.summary-box a{display:inline-block;background:#fff;color:#1a0a2e;padding:12px 28px;border-radius:4px;font-family:'Orbitron',monospace;font-size:0.78rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;}
+.back-section{text-align:center;margin-top:40px;}
+.back-link{display:inline-flex;align-items:center;gap:8px;color:var(--cyan);font-weight:700;font-family:'Orbitron',monospace;font-size:0.82rem;}
+.back-link:hover{text-decoration:underline;}
+footer{background:var(--heading);color:rgba(255,255,255,0.6);text-align:center;padding:28px;font-size:0.85rem;}
+footer a{color:#7dd3f8;}
+@media(max-width:600px){
+  .nav-inner,.container{padding-right:16px;padding-left:16px;}
+  .article-hero{padding:90px 16px 40px;}
+  .article-hero h1{font-size:1.25rem;}
+  .fake-signs,.update-reasons,.platform-compare{grid-template-columns:1fr;}
+  .perm-grid{grid-template-columns:repeat(2,1fr);}
+  .rvf-header,.rvf-row{grid-template-columns:1fr;}
+  .rvf-cell.real{border-left:none;border-top:1px solid var(--border);}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="images/logo_small.png" alt="">Mor<span>Of</span>Sec</a>
+    <a href="articles.html" class="nav-back">&#8592; כל המאמרים</a>
+  </div>
+</nav>
+
+<section class="article-hero">
+  <div class="container">
+    <div class="article-tag">סלולרי</div>
+    <h1>אבטחת מידע <span>בסלולרי</span> — המדריך המלא</h1>
+    <div class="article-meta">
+      <span>✍️ אופיר שמשון</span>
+      <span>📅 מרץ 2026</span>
+      <span>⏱️ קריאה של 5 דקות</span>
+    </div>
+  </div>
+</section>
+
+<section class="article-body">
+  <div class="container">
+    <div class="article-intro">
+      הסמארטפון שלך מכיל יותר מידע אישי מאשר כל מכשיר אחר — אנשי קשר, תמונות, מיילים, אפליקציות בנק ועוד. הוא גם מחובר לאינטרנט 24 שעות ביממה. אבטחתו חיונית לפחות כמו אבטחת המחשב.
+    </div>
+
+    <h2 class="section-h">זיהוי אפליקציות מזויפות</h2>
+
+    <div class="fake-signs">
+      <div class="fake-sign">
+        <div class="fake-sign-icon">👁️</div>
+        <div class="fake-sign-title">שם ואייקון דומים אך לא זהים</div>
+        <div class="fake-sign-desc">אפליקציה מזויפת תשתמש בשם כמו "WhatsApp Plus" או אייקון כמעט זהה. בדוק היטב את האיות ואת שם המפתח.</div>
+      </div>
+      <div class="fake-sign">
+        <div class="fake-sign-icon">⭐</div>
+        <div class="fake-sign-title">דירוג וביקורות חשודות</div>
+        <div class="fake-sign-desc">דירוג גבוה מאוד עם מעט מאוד ביקורות, או ביקורות שנכתבו כולן באותו יום — סימן לדירוגים מזויפים.</div>
+      </div>
+      <div class="fake-sign">
+        <div class="fake-sign-icon">📥</div>
+        <div class="fake-sign-title">מספר הורדות נמוך</div>
+        <div class="fake-sign-desc">אפליקציה פופולרית שאתה מכיר עם מיליון+ הורדות — גרסה מזויפת תהיה עם אלפים בלבד.</div>
+      </div>
+      <div class="fake-sign">
+        <div class="fake-sign-icon">🏢</div>
+        <div class="fake-sign-title">שם מפתח לא רשמי</div>
+        <div class="fake-sign-desc">WhatsApp הרשמית מאת "WhatsApp LLC". בנק הפועלים הרשמי מאת "Bank Hapoalim". מפתח לא מוכר — דגל אדום.</div>
+      </div>
+    </div>
+
+    <div class="real-vs-fake">
+      <div class="rvf-header">
+        <div class="rvf-col real">✅ אפליקציה מקורית</div>
+        <div class="rvf-col fake">❌ אפליקציה מזויפת</div>
+      </div>
+      <div class="rvf-row">
+        <div class="rvf-cell">מפתח ידוע ומאומת</div>
+        <div class="rvf-cell real">מפתח לא מוכר / שם מוזר</div>
+      </div>
+      <div class="rvf-row">
+        <div class="rvf-cell">מיליוני הורדות</div>
+        <div class="rvf-cell real">מעט הורדות</div>
+      </div>
+      <div class="rvf-row">
+        <div class="rvf-cell">ביקורות מפוזרות לאורך זמן</div>
+        <div class="rvf-cell real">ביקורות ריכוזיות ביום אחד</div>
+      </div>
+      <div class="rvf-row">
+        <div class="rvf-cell">הרשאות מינימליות</div>
+        <div class="rvf-cell real">הרשאות מוגזמות</div>
+      </div>
+      <div class="rvf-row">
+        <div class="rvf-cell">קישור לאתר רשמי בחנות</div>
+        <div class="rvf-cell real">אין אתר / אתר חשוד</div>
+      </div>
+    </div>
+
+    <div class="danger-box">
+      <strong>⚠️ הורדה מחוץ לחנות הרשמית</strong>
+      <p>התקנת APK מחוץ ל-Google Play (Android) או אפליקציה לא מאושרת ב-iOS — מסוכנת מאוד. חנויות האפליקציות הרשמיות בודקות אפליקציות לפני פרסום. מחוץ להן — אין בדיקה.</p>
+    </div>
+
+    <h2 class="section-h">הרשאות שמבקשות האפליקציות</h2>
+
+    <div class="perm-grid">
+      <div class="perm-card danger">
+        <div class="perm-icon">📍</div>
+        <div class="perm-name">מיקום מדויק</div>
+        <div class="perm-desc">גישה למיקום GPS מדויק — בדוק אם האפליקציה באמת צריכה זאת</div>
+      </div>
+      <div class="perm-card danger">
+        <div class="perm-icon">🎙️</div>
+        <div class="perm-name">מיקרופון</div>
+        <div class="perm-desc">יכולת להאזין לשיחות — נדרש רק לאפליקציות תקשורת ורישום</div>
+      </div>
+      <div class="perm-card danger">
+        <div class="perm-icon">📷</div>
+        <div class="perm-name">מצלמה</div>
+        <div class="perm-desc">גישה למצלמה — נדרש לצילום, לא לאפליקציות מחשבון</div>
+      </div>
+      <div class="perm-card danger">
+        <div class="perm-icon">👥</div>
+        <div class="perm-name">אנשי קשר</div>
+        <div class="perm-desc">כל אנשי הקשר שלך — שימוש נפוץ בסייגל ובגניבת מידע</div>
+      </div>
+      <div class="perm-card warning">
+        <div class="perm-icon">📱</div>
+        <div class="perm-name">שיחות טלפון</div>
+        <div class="perm-desc">קריאת יומן שיחות — נדרש לאפליקציות תקשורת בלבד</div>
+      </div>
+      <div class="perm-card warning">
+        <div class="perm-icon">💾</div>
+        <div class="perm-name">אחסון</div>
+        <div class="perm-desc">גישה לכל הקבצים בטלפון — בדוק אם נחוץ לפונקציית האפליקציה</div>
+      </div>
+    </div>
+
+    <ul class="perm-rules">
+      <li><strong>עקרון המינימום:</strong> אם אפליקציית פנס מבקשת גישה לאנשי קשר ומיקום — אל תאשר. בקש רק מה שנחוץ לפונקציה.</li>
+      <li><strong>הרשאה "רק בזמן שימוש":</strong> במיקום ומצלמה — בחר תמיד "בזמן שימוש" ולא "תמיד". כך האפליקציה לא עוקבת ברקע.</li>
+      <li><strong>סקירה תקופתית:</strong> אחת לחודש — Settings ← Apps ← בדוק אילו הרשאות לכל אפליקציה. בטל מה שלא נחוץ.</li>
+      <li><strong>מחק אפליקציות לא בשימוש:</strong> אפליקציה שלא השתמשת בה שלושה חודשים — מחק. פחות אפליקציות = פחות סיכון.</li>
+    </ul>
+
+    <h2 class="section-h">עדכוני מערכת הפעלה ואפליקציות</h2>
+
+    <div class="update-reasons">
+      <div class="update-reason">
+        <div class="update-reason-icon">🔒</div>
+        <div class="update-reason-title">סגירת חולשות אבטחה</div>
+        <div class="update-reason-desc">כל עדכון מערכת סוגר פרצות אבטחה שהתגלו. האקרים מנצלים פרצות ידועות על מכשירים לא מעודכנים — לעתים תוך שעות מפרסום הפרצה.</div>
+      </div>
+      <div class="update-reason">
+        <div class="update-reason-icon">🛡️</div>
+        <div class="update-reason-title">עדכוני Patch חודשיים</div>
+        <div class="update-reason-desc">גוגל ואפל מפרסמים עדכוני אבטחה חודשיים. כל חודש שעובר בלי עדכון — חודש שבו המכשיר שלך חשוף לפרצות ידועות.</div>
+      </div>
+      <div class="update-reason">
+        <div class="update-reason-icon">📱</div>
+        <div class="update-reason-title">עדכוני אפליקציות</div>
+        <div class="update-reason-desc">אפליקציות ישנות עם פרצות ידועות הן יעד קל. מפתחים מתקנים באגים אבטחה בעדכונים — אפליקציה לא מעודכנת נשארת פגיעה.</div>
+      </div>
+      <div class="update-reason">
+        <div class="update-reason-icon">⏰</div>
+        <div class="update-reason-title">מכשיר ישן ללא תמיכה</div>
+        <div class="update-reason-desc">מכשיר שהיצרן הפסיק לתמוך בו לא מקבל עדכוני אבטחה. אם הטלפון שלך לא מקבל עדכונים — שקול החלפה.</div>
+      </div>
+    </div>
+
+    <div class="platform-compare">
+      <div class="platform-card">
+        <div class="platform-header android">🤖 Android</div>
+        <div class="platform-body">
+          <ul class="platform-list">
+            <li>Settings ← System ← System Update</li>
+            <li>הפעל עדכונים אוטומטיים</li>
+            <li>בדוק עדכוני אבטחה נפרדים (Security Patch)</li>
+            <li>Google Play ← עדכן אפליקציות אוטומטי</li>
+            <li>מכשירי Google Pixel — עדכון מהיר ביותר</li>
+          </ul>
+        </div>
+      </div>
+      <div class="platform-card">
+        <div class="platform-header ios">🍎 iPhone / iOS</div>
+        <div class="platform-body">
+          <ul class="platform-list">
+            <li>Settings ← General ← Software Update</li>
+            <li>הפעל Automatic Updates</li>
+            <li>App Store ← Updates ← Update All</li>
+            <li>iOS מקבל תמיכה 5-6 שנים מרכישה</li>
+            <li>עדכוני אבטחה מגיעים גם ל-iOS ישן</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>✅ 3 כללים לאבטחת הסלולרי שלך</strong>
+      <p>1. הורד אפליקציות רק מחנות רשמית ובדוק את שם המפתח. 2. בטל הרשאות מיותרות לכל אפליקציה. 3. הפעל עדכונים אוטומטיים — מערכת הפעלה ואפליקציות. אלה שלושת הצעדים עם ההשפעה הגדולה ביותר.</p>
+    </div>
+
+    <div class="summary-box">
+      <h3>רוצה לאבטח את מכשירי הסלולרי בארגון שלך?</h3>
+      <p>MorOfSec מסייעת לעסקים להטמיע מדיניות MDM לניהול מכשירים ניידים — עדכונים, הרשאות ואבטחה מרכזית.</p>
+      <a href="index.html#contact">צור קשר לייעוץ</a>
+    </div>
+
+    <div class="back-section">
+      <a href="articles.html" class="back-link">&#8592; חזרה לכל המאמרים</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 MorOfSec | <a href="mailto:morofsec74@gmail.com">morofsec74@gmail.com</a> | <a href="tel:+972584577520">058-457-7520</a></p>
+</footer>
+</body>
+</html>

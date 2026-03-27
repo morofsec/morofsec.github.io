@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מתקפות פישינג — איך לזהות ולהתגונן | MorOfSec</title>
+<meta name="description" content="סימנים לזיהוי הודעות פישינג, דוגמאות אמיתיות, כיצד ללמד עובדים ואילו כלים מגנים עליך. מאת אופיר שמשון, MorOfSec">
+<meta name="keywords" content="פישינג, phishing, זיהוי הודעות חשודות, אבטחת מידע, הגנה על עובדים">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://morofsec.com/article-phishing.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#f0f4f8;--bg2:#e8edf3;--white:#fff;--heading:#0a1e2e;--text:#1a3040;--muted:#2d5068;--cyan:#005f8a;--teal:#00886a;--border:#d0dce8;--danger:#8b0000;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Heebo',sans-serif;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+nav{position:fixed;top:0;width:100%;z-index:100;padding:18px 0;backdrop-filter:blur(20px);border-bottom:1px solid var(--border);background:rgba(240,244,248,0.95);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding:0 40px;}
+.nav-logo{font-family:'Orbitron',monospace;font-size:1.4rem;font-weight:900;color:var(--heading);letter-spacing:2px;display:flex;align-items:center;gap:10px;}
+.nav-logo img{width:36px;height:36px;object-fit:contain;border-radius:50%;border:2px solid var(--cyan);background:var(--white);}
+.nav-logo span{color:var(--cyan);}
+.nav-back{display:flex;align-items:center;gap:8px;color:var(--cyan);font-weight:600;font-size:0.9rem;}
+.nav-back:hover{text-decoration:underline;}
+.container{max-width:860px;margin:0 auto;padding:0 40px;}
+.article-hero{padding:110px 0 50px;background:linear-gradient(135deg,#4a0000,#8b0000);color:#fff;text-align:center;}
+.article-tag{display:inline-block;background:rgba(255,100,100,0.25);color:#ffaaaa;font-size:0.72rem;font-weight:700;letter-spacing:3px;padding:5px 14px;border-radius:20px;font-family:'Orbitron',monospace;text-transform:uppercase;margin-bottom:20px;}
+.article-hero h1{font-family:'Orbitron',monospace;font-size:1.7rem;font-weight:900;line-height:1.3;margin-bottom:16px;}
+.article-hero h1 span{color:#ffaaaa;}
+.article-meta{display:flex;align-items:center;justify-content:center;gap:24px;font-size:0.85rem;color:rgba(255,255,255,0.65);margin-top:20px;flex-wrap:wrap;}
+.article-body{padding:56px 0 80px;}
+.article-intro{font-size:1.05rem;color:var(--text);line-height:1.95;margin-bottom:48px;padding:24px 28px;background:var(--white);border-radius:8px;border-right:4px solid var(--danger);font-weight:500;}
+
+/* SECTION TITLE */
+.section-h{font-family:'Orbitron',monospace;font-size:0.85rem;font-weight:800;color:var(--heading);letter-spacing:2px;text-transform:uppercase;margin:48px 0 20px;padding-bottom:10px;border-bottom:2px solid var(--border);}
+
+/* SIGNS */
+.signs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:40px;}
+.sign-card{background:var(--white);border:2px solid var(--border);border-radius:8px;padding:20px;transition:border-color 0.3s;}
+.sign-card:hover{border-color:#8b0000;}
+.sign-icon{font-size:1.6rem;margin-bottom:10px;}
+.sign-title{font-weight:800;color:var(--heading);font-size:0.9rem;margin-bottom:6px;}
+.sign-desc{font-size:0.86rem;color:var(--text);line-height:1.7;}
+
+/* EXAMPLES */
+.example{background:var(--white);border:2px solid var(--border);border-radius:8px;margin-bottom:20px;overflow:hidden;}
+.example-header{background:linear-gradient(135deg,#4a0000,#6b0000);color:#fff;padding:14px 20px;display:flex;align-items:center;gap:10px;}
+.example-header span{font-size:0.8rem;font-weight:700;font-family:'Orbitron',monospace;letter-spacing:1px;}
+.example-email{padding:18px 20px;font-size:0.87rem;line-height:1.8;border-bottom:1px solid var(--border);}
+.example-email .from{color:var(--muted);margin-bottom:4px;}
+.example-email .subject{font-weight:700;color:var(--heading);margin-bottom:12px;}
+.example-email .body{color:var(--text);}
+.example-email .danger{color:#8b0000;font-weight:700;}
+.example-analysis{padding:14px 20px;background:rgba(139,0,0,0.04);}
+.example-analysis p{font-size:0.84rem;color:var(--text);line-height:1.7;}
+.example-analysis strong{color:#8b0000;}
+
+/* TRAINING */
+.training-steps{counter-reset:step;}
+.training-step{background:var(--white);border:2px solid var(--border);border-radius:8px;padding:22px 22px 22px 28px;margin-bottom:16px;position:relative;transition:border-color 0.3s;}
+.training-step:hover{border-color:var(--teal);}
+.training-step::before{counter-increment:step;content:counter(step);position:absolute;right:-14px;top:18px;background:var(--teal);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',monospace;font-size:0.7rem;font-weight:800;}
+.step-title{font-weight:800;color:var(--heading);margin-bottom:8px;font-size:0.92rem;}
+.step-desc{font-size:0.87rem;color:var(--text);line-height:1.75;}
+
+/* TOOLS */
+.tools-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:40px;}
+.tool-card{background:var(--white);border:2px solid var(--border);border-radius:8px;padding:20px;}
+.tool-name{font-family:'Orbitron',monospace;font-size:0.8rem;font-weight:800;color:var(--cyan);margin-bottom:6px;}
+.tool-desc{font-size:0.86rem;color:var(--text);line-height:1.7;}
+.tool-type{display:inline-block;margin-top:8px;font-size:0.72rem;background:rgba(0,95,138,0.08);color:var(--cyan);padding:3px 10px;border-radius:12px;font-weight:600;}
+
+/* SUMMARY */
+.summary-box{background:linear-gradient(135deg,#4a0000,#8b0000);border-radius:10px;padding:36px 32px;margin-top:48px;color:#fff;text-align:center;}
+.summary-box h3{font-family:'Orbitron',monospace;font-size:1rem;font-weight:800;margin-bottom:12px;color:#ffaaaa;}
+.summary-box p{font-size:0.92rem;color:rgba(255,255,255,0.85);line-height:1.8;margin-bottom:20px;}
+.summary-box a{display:inline-block;background:#fff;color:#8b0000;padding:12px 28px;border-radius:4px;font-family:'Orbitron',monospace;font-size:0.78rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;}
+.back-section{text-align:center;margin-top:40px;}
+.back-link{display:inline-flex;align-items:center;gap:8px;color:var(--cyan);font-weight:700;font-family:'Orbitron',monospace;font-size:0.82rem;letter-spacing:1px;}
+.back-link:hover{text-decoration:underline;}
+footer{background:var(--heading);color:rgba(255,255,255,0.6);text-align:center;padding:28px;font-size:0.85rem;}
+footer a{color:#7dd3f8;}
+@media(max-width:600px){
+  .nav-inner,.container{padding-right:16px;padding-left:16px;}
+  .article-hero{padding:90px 16px 40px;}
+  .article-hero h1{font-size:1.25rem;}
+  .signs-grid,.tools-grid{grid-template-columns:1fr;}
+  .training-step{padding-right:20px;}
+  .training-step::before{right:-10px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="images/logo_small.png" alt="">Mor<span>Of</span>Sec</a>
+    <a href="articles.html" class="nav-back">&#8592; כל המאמרים</a>
+  </div>
+</nav>
+
+<section class="article-hero">
+  <div class="container">
+    <div class="article-tag">איומים</div>
+    <h1>מתקפות <span>פישינג</span> — המדריך המלא לזיהוי והגנה</h1>
+    <div class="article-meta">
+      <span>✍️ אופיר שמשון</span>
+      <span>📅 מרץ 2026</span>
+      <span>⏱️ קריאה של 6 דקות</span>
+    </div>
+  </div>
+</section>
+
+<section class="article-body">
+  <div class="container">
+    <div class="article-intro">
+      פישינג הוא הסוג הנפוץ ביותר של מתקפות סייבר — כ-90% מהפרצות מתחילות בהודעת פישינג אחת. הטכניקה פשוטה: האקר מתחזה לגורם מוכר ומשכנע אותך לחשוף מידע או ללחוץ על קישור מסוכן. המדריך הזה יעזור לך לזהות, להתגונן ולהכשיר את הצוות שלך.
+    </div>
+
+    <h2 class="section-h">סימנים לזיהוי הודעות חשודות</h2>
+    <div class="signs-grid">
+      <div class="sign-card">
+        <div class="sign-icon">📧</div>
+        <div class="sign-title">כתובת שולח חשודה</div>
+        <div class="sign-desc">המייל נראה רשמי אבל הדומיין שונה — "support@paypa1.com" במקום "paypal.com". בדוק תמיד את הכתובת המלאה.</div>
+      </div>
+      <div class="sign-card">
+        <div class="sign-icon">⚡</div>
+        <div class="sign-title">דחיפות מלאכותית</div>
+        <div class="sign-desc">"חשבונך יוחסם תוך 24 שעות", "פעל עכשיו או תאבד גישה". דחיפות היא טקטיקת לחץ קלאסית של פישינג.</div>
+      </div>
+      <div class="sign-card">
+        <div class="sign-icon">🔗</div>
+        <div class="sign-title">קישורים חשודים</div>
+        <div class="sign-desc">רחף עם העכבר על הקישור לפני לחיצה — הכתובת האמיתית מופיעה בתחתית המסך. אם היא שונה מהמצופה — אל תלחץ.</div>
+      </div>
+      <div class="sign-card">
+        <div class="sign-icon">🔑</div>
+        <div class="sign-title">בקשה לפרטים אישיים</div>
+        <div class="sign-desc">שום גוף לגיטימי לא יבקש סיסמה, פרטי אשראי או קוד אימות במייל. זהו סימן אדום ברור.</div>
+      </div>
+      <div class="sign-card">
+        <div class="sign-icon">📎</div>
+        <div class="sign-title">קבצים מצורפים לא צפויים</div>
+        <div class="sign-desc">קובץ PDF, Word או ZIP שלא ביקשת — עלול להכיל נוזקות. אל תפתח קבצים לא מוכרים גם אם השולח "מוכר".</div>
+      </div>
+      <div class="sign-card">
+        <div class="sign-icon">✍️</div>
+        <div class="sign-title">שגיאות כתיב וניסוח</div>
+        <div class="sign-desc">שגיאות דקדוק, ניסוח מוזר או תרגום גרוע הם סימן לפישינג — אך מתקפות מתוחכמות כיום נכתבות בשפה תקינה לחלוטין.</div>
+      </div>
+    </div>
+
+    <h2 class="section-h">דוגמאות אמיתיות לפישינג</h2>
+
+    <div class="example">
+      <div class="example-header">
+        <span>דוגמה 01 — התחזות לבנק</span>
+      </div>
+      <div class="example-email">
+        <div class="from">מאת: security@bank-il-alert.com</div>
+        <div class="subject">⚠️ פעולה נדרשת: חשבונך הוגבל</div>
+        <div class="body">שלום לקוח יקר,<br>זיהינו פעילות חשודה בחשבונך. <span class="danger">לחץ כאן לאימות פרטייך</span> תוך 12 שעות, אחרת חשבונך יוקפא לצמיתות.<br>צוות האבטחה</div>
+      </div>
+      <div class="example-analysis">
+        <p><strong>🔴 סימני אזהרה:</strong> הדומיין "bank-il-alert.com" אינו שייך לאף בנק, דחיפות מלאכותית, איום בהקפאה, בקשה ללחוץ על קישור לאימות.</p>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-header">
+        <span>דוגמה 02 — התחזות לדואר ישראל</span>
+      </div>
+      <div class="example-email">
+        <div class="from">מאת: noreply@israel-post-delivery.net</div>
+        <div class="subject">החבילה שלך ממתינה — נדרש תשלום אגרה</div>
+        <div class="body">יש לך חבילה בדרך! לצורך שחרור החבילה נדרש תשלום אגרה של ₪12.90. <span class="danger">לחץ לתשלום מאובטח.</span><br>מספר מעקב: IL8472639</div>
+      </div>
+      <div class="example-analysis">
+        <p><strong>🔴 סימני אזהרה:</strong> דואר ישראל לא שולח מיילים מ-.net, "תשלום אגרה" הוא טקטיקה נפוצה, מספר מעקב מזויף ליצירת אמינות.</p>
+      </div>
+    </div>
+
+    <div class="example">
+      <div class="example-header">
+        <span>דוגמה 03 — פישינג עסקי (BEC)</span>
+      </div>
+      <div class="example-email">
+        <div class="from">מאת: ceo.cohen@company-il.co (במקום company-il.co.il)</div>
+        <div class="subject">העברה דחופה — סודי</div>
+        <div class="body">שלום,<br>אני בישיבה ולא זמין לשיחה. צריך להעביר 45,000₪ לספק חדש עד סוף היום. <span class="danger">פרטי חשבון מצורפים.</span> אל תדבר עם אף אחד — זה סודי.<br>יוסי</div>
+      </div>
+      <div class="example-analysis">
+        <p><strong>🔴 סימני אזהרה:</strong> דומיין שונה בספרה אחת, בקשה לסודיות (מונע בדיקה), דחיפות, בקשה להעברת כסף ללא אישור פנים אל פנים.</p>
+      </div>
+    </div>
+
+    <h2 class="section-h">כיצד ללמד עובדים לזהות פישינג</h2>
+    <div class="training-steps">
+      <div class="training-step">
+        <div class="step-title">הדרכה מעשית — לא תיאורטית</div>
+        <div class="step-desc">הראה דוגמאות אמיתיות של פישינג שהגיע לתעשייה שלך. עובדים לומדים טוב יותר מדוגמאות קונקרטיות מאשר מהרצאות כלליות.</div>
+      </div>
+      <div class="training-step">
+        <div class="step-title">סימולציות פישינג מבוקרות</div>
+        <div class="step-desc">שלח מיילי פישינג מדומים לעובדים — בלי לדעת שזה תרגיל. עובדים שנופלים מקבלים הדרכה מיידית. זה הכלי האפקטיבי ביותר.</div>
+      </div>
+      <div class="training-step">
+        <div class="step-title">נוהל דיווח ברור</div>
+        <div class="step-desc">הגדר איך לדווח על מייל חשוד — כפתור "דווח על פישינג" בתוכנת המייל, או כתובת ייעודית. עובד שמדווח הוא עובד שלא לוחץ.</div>
+      </div>
+      <div class="training-step">
+        <div class="step-title">עדכון שוטף</div>
+        <div class="step-desc">פישינג מתפתח כל הזמן. שלח עדכון חודשי עם דוגמאות חדשות. הפוך את המודעות לחלק מהתרבות הארגונית ולא לאירוע חד-פעמי.</div>
+      </div>
+      <div class="training-step">
+        <div class="step-title">כלל הזהב שכל עובד צריך לזכור</div>
+        <div class="step-desc">במקרה של ספק — אל תלחץ, אל תפתח, אל תזין. צור קשר עם השולח בטלפון לאימות. 10 שניות של בדיקה שווות הרבה יותר מנזק של פריצה.</div>
+      </div>
+    </div>
+
+    <h2 class="section-h">כלים שמזהים ומסננים ניסיונות פישינג</h2>
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="tool-name">Microsoft Defender</div>
+        <div class="tool-desc">מסנן מיילים חשודים ב-Outlook, מזהה קישורים מסוכנים בזמן אמת ומגן על משתמשי Microsoft 365.</div>
+        <span class="tool-type">🏢 ארגוני</span>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">Google Safe Browsing</div>
+        <div class="tool-desc">מובנה בכל דפדפני Chrome, Firefox ו-Safari. חוסם אתרי פישינג לפני שהגולש מגיע אליהם.</div>
+        <span class="tool-type">🌐 דפדפן</span>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">Proofpoint / Mimecast</div>
+        <div class="tool-desc">פתרונות ארגוניים מתקדמים לסינון מיילים, זיהוי BEC ופישינג מתוחכם לפני שמגיע לתיבת הדואר.</div>
+        <span class="tool-type">🏢 ארגוני</span>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">VirusTotal</div>
+        <div class="tool-desc">בדוק קבצים וקישורים חשודים בחינם. מנתח מול עשרות מנועי אנטי-וירוס בו-זמנית. זמין ב-virustotal.com</div>
+        <span class="tool-type">🔍 בדיקה חינמית</span>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">KnowBe4</div>
+        <div class="tool-desc">פלטפורמה להדרכת עובדים וסימולציות פישינג. אחת הפופולריות בעולם לבניית מודעות אבטחה.</div>
+        <span class="tool-type">🎓 הדרכה</span>
+      </div>
+      <div class="tool-card">
+        <div class="tool-name">SPF / DKIM / DMARC</div>
+        <div class="tool-desc">פרוטוקולים טכניים שמונעים התחזות לדומיין שלך. חיוני לכל ארגון — מונע מהאקרים לשלוח מיילים בשמך.</div>
+        <span class="tool-type">⚙️ תשתית</span>
+      </div>
+    </div>
+
+    <div class="summary-box">
+      <h3>מעוניין להכשיר את הצוות שלך?</h3>
+      <p>MorOfSec מציעה סימולציות פישינג מותאמות לארגון שלך, הדרכות מעשיות ובניית נהלי אבטחה. צור קשר לייעוץ ראשוני.</p>
+      <a href="index.html#contact">צור קשר עכשיו</a>
+    </div>
+
+    <div class="back-section">
+      <a href="articles.html" class="back-link">&#8592; חזרה לכל המאמרים</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 MorOfSec | <a href="mailto:morofsec74@gmail.com">morofsec74@gmail.com</a> | <a href="tel:+972584577520">058-457-7520</a></p>
+</footer>
+
+</body>
+</html>

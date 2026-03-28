@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>טעויות אבטחת מידע נפוצות | MorOfSec</title>
+<meta name="description" content="8 טעויות אבטחת מידע נפוצות שכל עסק ופרט עושה — וכיצד להימנע מהן. מאת אופיר שמשון, MorOfSec">
+<meta name="keywords" content="טעויות אבטחת מידע, סיסמאות חלשות, אימות דו שלבי, פישינג, גיבויים, הרשאות יתר">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://morofsec.com/article-security-mistakes.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#f0f4f8;--bg2:#e8edf3;--white:#fff;--heading:#0a1e2e;--text:#1a3040;--muted:#2d5068;--cyan:#005f8a;--teal:#00886a;--border:#d0dce8;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Heebo',sans-serif;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+nav{position:fixed;top:0;width:100%;z-index:100;padding:18px 0;backdrop-filter:blur(20px);border-bottom:1px solid var(--border);background:rgba(240,244,248,0.95);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding:0 40px;}
+.nav-logo{font-family:'Orbitron',monospace;font-size:1.4rem;font-weight:900;color:var(--heading);letter-spacing:2px;display:flex;align-items:center;gap:10px;}
+.nav-logo img{width:36px;height:36px;object-fit:contain;border-radius:50%;border:2px solid var(--cyan);background:var(--white);}
+.nav-logo span{color:var(--cyan);}
+.nav-back{display:flex;align-items:center;gap:8px;color:var(--cyan);font-weight:600;font-size:0.9rem;}
+.nav-back:hover{text-decoration:underline;}
+.container{max-width:860px;margin:0 auto;padding:0 40px;}
+
+/* HERO */
+.article-hero{padding:110px 0 50px;background:linear-gradient(135deg,#0a1e2e,#1a3a52);color:#fff;text-align:center;}
+.article-tag{display:inline-block;background:rgba(0,95,138,0.4);color:#7dd3f8;font-size:0.72rem;font-weight:700;letter-spacing:3px;padding:5px 14px;border-radius:20px;font-family:'Orbitron',monospace;text-transform:uppercase;margin-bottom:20px;}
+.article-hero h1{font-family:'Orbitron',monospace;font-size:1.7rem;font-weight:900;line-height:1.3;margin-bottom:16px;}
+.article-hero h1 span{color:#7dd3f8;}
+.article-meta{display:flex;align-items:center;justify-content:center;gap:24px;font-size:0.85rem;color:rgba(255,255,255,0.65);margin-top:20px;flex-wrap:wrap;}
+.article-meta span{display:flex;align-items:center;gap:6px;}
+
+/* CONTENT */
+.article-body{padding:56px 0 80px;}
+.article-intro{font-size:1.05rem;color:var(--text);line-height:1.95;margin-bottom:48px;padding:24px 28px;background:var(--white);border-radius:8px;border-right:4px solid var(--cyan);font-weight:500;}
+
+/* MISTAKE CARD */
+.mistake{background:var(--white);border:2px solid var(--border);border-radius:10px;padding:32px 28px;margin-bottom:28px;transition:border-color 0.3s;}
+.mistake:hover{border-color:var(--cyan);}
+.mistake-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:16px;}
+.mistake-num{font-family:'Orbitron',monospace;font-size:0.7rem;font-weight:900;color:var(--white);background:var(--cyan);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;letter-spacing:1px;}
+.mistake-icon{font-size:1.8rem;flex-shrink:0;}
+.mistake-title{font-family:'Orbitron',monospace;font-size:0.9rem;font-weight:800;color:var(--heading);line-height:1.3;}
+.mistake-body{font-size:0.92rem;color:var(--text);line-height:1.85;font-weight:500;}
+.mistake-body p{margin-bottom:12px;}
+.tip-box{background:rgba(0,136,106,0.07);border:1px solid rgba(0,136,106,0.25);border-radius:6px;padding:14px 18px;margin-top:14px;}
+.tip-box strong{color:var(--teal);font-size:0.85rem;display:block;margin-bottom:4px;font-family:'Orbitron',monospace;letter-spacing:1px;}
+.tip-box p{font-size:0.87rem;color:var(--text);line-height:1.7;margin:0;}
+
+/* SUMMARY */
+.summary-box{background:linear-gradient(135deg,#0a1e2e,#1a3a52);border-radius:10px;padding:36px 32px;margin-top:48px;color:#fff;text-align:center;}
+.summary-box h3{font-family:'Orbitron',monospace;font-size:1rem;font-weight:800;margin-bottom:12px;color:#7dd3f8;}
+.summary-box p{font-size:0.92rem;color:rgba(255,255,255,0.8);line-height:1.8;margin-bottom:20px;}
+.summary-box a{display:inline-block;background:var(--cyan);color:#fff;padding:12px 28px;border-radius:4px;font-family:'Orbitron',monospace;font-size:0.78rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;}
+.summary-box a:hover{background:#003f5e;}
+
+/* BACK */
+.back-section{text-align:center;margin-top:48px;}
+.back-link{display:inline-flex;align-items:center;gap:8px;color:var(--cyan);font-weight:700;font-family:'Orbitron',monospace;font-size:0.82rem;letter-spacing:1px;}
+.back-link:hover{text-decoration:underline;}
+
+footer{background:var(--heading);color:rgba(255,255,255,0.6);text-align:center;padding:28px;font-size:0.85rem;}
+footer a{color:#7dd3f8;}
+
+@media(max-width:600px){
+  .nav-inner,.container{padding-right:16px;padding-left:16px;}
+  .article-hero{padding:90px 16px 40px;}
+  .article-hero h1{font-size:1.25rem;}
+  .mistake{padding:22px 18px;}
+  .summary-box{padding:24px 18px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="images/logo_small.png" alt="">Mor<span>Of</span>Sec</a>
+    <a href="articles.html" class="nav-back">&#8592; כל המאמרים</a>
+  </div>
+</nav>
+
+<section class="article-hero">
+  <div class="container">
+    <div class="article-tag">כללי</div>
+    <h1>8 טעויות <span>אבטחת מידע</span> נפוצות</h1>
+    <div class="article-meta">
+      <span>✍️ אופיר שמשון</span>
+      <span>📅 מרץ 2026</span>
+      <span>⏱️ קריאה של 5 דקות</span>
+    </div>
+  </div>
+</section>
+
+
+<div style="width:100%;overflow:hidden;max-height:360px;"><img src="images/dangerous-download.jpg" alt="הורדה ממקור לא ידוע" style="width:100%;max-height:360px;object-fit:cover;display:block;"></div>
+<section class="article-body">
+  <div class="container">
+        <div class="article-intro">
+      רוב הפרצות האבטחה לא נובעות מהאקרים גאונים — אלא מטעויות פשוטות שאנשים ועסקים עושים שוב ושוב. הכרת הטעויות הנפוצות היא הצעד הראשון להגנה אמיתית.
+    </div>
+
+        <div class="mistake">
+      <div class="mistake-header">
+        <div class="mistake-num">01</div>
+        <div class="mistake-icon">🔑</div>
+        <div class="mistake-title">שימוש בסיסמאות חלשות או זהות בכמה חשבונות</div>
+      </div>
+      <div class="mistake-body">
+        <p>סיסמאות כמו "123456", "password" או שם הילד ותאריך הלידה הן הבעיה הנפוצה ביותר. כשהאקר פורץ לאתר אחד ומקבל את הסיסמה שלך — הוא מנסה אותה אוטומטית על Gmail, בנק, פייסבוק וכל שאר החשבונות.</p>
+        <div class="tip-box">
+          <strong>✅ הפתרון</strong>
+          <p>סיסמה ייחודית לכל אתר עם לפחות 12 תווים. השתמש במנהל סיסמאות כמו Bitwarden, 1Password או Dashlane — הם זוכרים במקומך.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mistake">
+      <div class="mistake-header">
+        <div class="mistake-num">02</div>
+        <div class="mistake-icon">📱</div>
+        <div class="mistake-title">היעדר אימות דו-שלבי (MFA)</div>
+      </div>
+      <div class="mistake-body">
+        <p>גם אם הסיסמה שלך נגנבה — MFA מונע כניסה לחשבון. בלי אימות דו-שלבי, הסיסמה לבדה היא כל מה שעומד בין האקר לחשבון שלך.</p>
+        <div class="tip-box">
+          <strong>✅ הפתרון</strong>
+          <p>הפעל MFA על כל החשבונות החשובים — Gmail, בנק, רשתות חברתיות. השתמש ב-Google Authenticator או Microsoft Authenticator.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mistake">
+      <div class="mistake-header">
+        <div class="mistake-num">03</div>
+        <div class="mistake-icon">⬇️</div>
+        <div class="mistake-title">הורדת קבצים ממקומות לא מוכרים</div>
+      </div>
+      <div class="mistake-body">
+        <p>קובץ PDF, תוכנה חינמית, סרט "בחינם" — כל אלה יכולים להכיל נוזקות, כופרה או תוכנות ריגול. אחת הדרכים הנפוצות ביותר להדביק מחשב.</p>
+        <div class="tip-box">
+          <strong>✅ הפתרון</strong>
+          <p>הורד תוכנות רק מאתרים רשמיים. בדוק קבצים חשודים ב-VirusTotal.com לפני פתיחה. אנטי-וירוס מעודכן הוא חובה.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mistake">
+      <div class="mistake-header">
+        <div class="mistake-num">04</div>
+        <div class="mistake-icon">🎣</div>
+        <div class="mistake-title">חוסר מודעות לפישינג</div>
+      </div>
+      <div class="mistake-body">
+        <p>הודעות דואל מזויפות שנראות בדיוק כמו הבנק, הדואר או גוגל. לחיצה על קישור אחד יכולה לגנוב סיסמאות, פרטי אשראי ולהכניס נוזקות למחשב.</p>
+        <div class="tip-box">
+          <strong>✅ הפתרון</strong>
+          <p>בדוק תמיד את כתובת השולח. אל תלחץ על קישורים בדואל — פתח את האתר ידנית. הדואל לא ידרוש ממך סיסמה לעולם.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mistake">
+      <div class="mistake-header">
+        <div class="mistake-num">05</div>
+        <div class="mistake-icon">☁️</div>
+        <div class="mistake-title">גיבויים שלא נבדקים</div>
+      </div>
+      <div class="mistake-body">
+        <p>אנשים רבים מגבים — אבל לא בודקים שהגיבוי אכן עובד. כשמגיע רגע האמת (קריסה, כופרה, גניבה) — מגלים שהגיבוי לא שלם או לא ניתן לשחזור.</p>
+        <div class="tip-box">
+          <strong>✅ הפתרון</strong>
+          <p>בצע שחזור ניסיוני אחת לחודש. השתמש בכלל 3-2-1: 3 עותקים, 2 מדיות שונות, 1 מחוץ לאתר (ענן).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mistake">
+      <div class="mistake-header">
+        <div class="mistake-num">06</div>
+        <div class="mistake-icon">👤</div>
+        <div class="mistake-title">הרשאות יתר לעובדים</div>
+      </div>
+      <div class="mistake-body">
+        <p>כשכל עובד ניגש לכל המידע — כל פריצה לחשבון עובד אחד חושפת את כל הארגון. עיקרון "הרשאה מינימלית" הוא יסוד באבטחת מידע.</p>
+        <div class="tip-box">
+          <strong>✅ הפתרון</strong>
+          <p>כל עובד מקבל גישה רק למה שנחוץ לתפקידו. בצע סקירת הרשאות אחת לרבעון. בטל גישה מיד עם עזיבת עובד.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mistake">
+      <div class="mistake-header">
+        <div class="mistake-num">07</div>
+        <div class="mistake-icon">📋</div>
+        <div class="mistake-title">היעדר נהלי אבטחה</div>
+      </div>
+      <div class="mistake-body">
+        <p>בלי נהלים כתובים — כל עובד פועל לפי שיקול דעתו. מה קורה כשמחשב נגנב? מי מקבל הודעה על אירוע אבטחה? בלי תשובות ברורות, הנזק גדול בהרבה.</p>
+        <div class="tip-box">
+          <strong>✅ הפתרון</strong>
+          <p>הכן נהלי אבטחה בסיסיים: מדיניות סיסמאות, נוהל דיווח על אירועים, נוהל עזיבת עובד. MorOfSec יכולה לעזור בבניית הנהלים.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mistake">
+      <div class="mistake-header">
+        <div class="mistake-num">08</div>
+        <div class="mistake-icon">🖥️</div>
+        <div class="mistake-title">שימוש במערכות ישנות ולא מעודכנות</div>
+      </div>
+      <div class="mistake-body">
+        <p>Windows 7, תוכנות ישנות ללא עדכונים, WordPress עם תוספים מיושנים — כל אלה מכילים חולשות ידועות שהאקרים מנצלים. עדכון הוא לא מותרות — הוא הגנה.</p>
+        <div class="tip-box">
+          <strong>✅ הפתרון</strong>
+          <p>הפעל עדכונים אוטומטיים. הגדר יום קבוע בשבוע לבדיקת עדכונים. מערכות שאי-אפשר לעדכן — יש להחליף.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-box">
+      <h3>רוצה לוודא שהעסק שלך מוגן?</h3>
+      <p>MorOfSec מציעה סקירת אבטחה מקיפה שתזהה את הטעויות הספציפיות אצלך ותספק פתרונות מעשיים ומהירים.</p>
+      <a href="index.html#contact">צור קשר לייעוץ חינמי</a>
+    </div>
+
+    <div class="back-section">
+      <a href="articles.html" class="back-link">&#8592; חזרה לכל המאמרים</a>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 MorOfSec | <a href="/cdn-cgi/l/email-protection#325f5d405d54415751050672555f535b5e1c515d5f"><span class="__cf_email__" data-cfemail="caa7a5b8a5acb9afa9

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>אבטחת רשת ביתית ומשרדית | MorOfSec</title>
+<meta name="description" content="סיסמת ברירת מחדל של נתב, WPA3, הפרדת רשת אורחים וניהול ציוד רשת. מאת אופיר שמשון, MorOfSec">
+<meta name="keywords" content="אבטחת רשת, נתב, WiFi, WPA3, רשת אורחים, ניטור תעבורה, אבטחת ראוטר">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://morofsec.com/article-network-security.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#f0f4f8;--bg2:#e8edf3;--white:#fff;--heading:#0a1e2e;--text:#1a3040;--muted:#2d5068;--cyan:#005f8a;--teal:#00886a;--border:#d0dce8;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Heebo',sans-serif;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+nav{position:fixed;top:0;width:100%;z-index:100;padding:18px 0;backdrop-filter:blur(20px);border-bottom:1px solid var(--border);background:rgba(240,244,248,0.95);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding:0 40px;}
+.nav-logo{font-family:'Orbitron',monospace;font-size:1.4rem;font-weight:900;color:var(--heading);letter-spacing:2px;display:flex;align-items:center;gap:10px;}
+.nav-logo img{width:36px;height:36px;object-fit:contain;border-radius:50%;border:2px solid var(--cyan);background:var(--white);}
+.nav-logo span{color:var(--cyan);}
+.nav-back{display:flex;align-items:center;gap:8px;color:var(--cyan);font-weight:600;font-size:0.9rem;}
+.nav-back:hover{text-decoration:underline;}
+.container{max-width:860px;margin:0 auto;padding:0 40px;}
+.article-hero{padding:110px 0 50px;background:linear-gradient(135deg,#003f5e,#005f8a);color:#fff;text-align:center;}
+.article-tag{display:inline-block;background:rgba(100,200,255,0.15);color:#a8e0ff;font-size:0.72rem;font-weight:700;letter-spacing:3px;padding:5px 14px;border-radius:20px;font-family:'Orbitron',monospace;text-transform:uppercase;margin-bottom:20px;}
+.article-hero h1{font-family:'Orbitron',monospace;font-size:1.7rem;font-weight:900;line-height:1.3;margin-bottom:16px;}
+.article-hero h1 span{color:#a8e0ff;}
+.article-meta{display:flex;align-items:center;justify-content:center;gap:24px;font-size:0.85rem;color:rgba(255,255,255,0.65);margin-top:20px;flex-wrap:wrap;}
+.article-body{padding:56px 0 80px;}
+.article-intro{font-size:1.05rem;color:var(--text);line-height:1.95;margin-bottom:48px;padding:24px 28px;background:var(--white);border-radius:8px;border-right:4px solid var(--cyan);font-weight:500;}
+.section-h{font-family:'Orbitron',monospace;font-size:0.85rem;font-weight:800;color:var(--heading);letter-spacing:2px;text-transform:uppercase;margin:48px 0 20px;padding-bottom:10px;border-bottom:2px solid var(--border);}
+
+/* DEFAULT PASSWORD */
+.danger-box{background:rgba(139,0,0,0.05);border:2px solid rgba(139,0,0,0.2);border-radius:8px;padding:20px 24px;margin-bottom:20px;}
+.danger-box strong{color:#8b0000;display:block;margin-bottom:8px;font-size:0.9rem;font-family:'Orbitron',monospace;}
+.danger-box p{font-size:0.88rem;color:var(--text);line-height:1.8;}
+
+.steps-list{list-style:none;margin-bottom:28px;}
+.steps-list li{background:var(--white);border:2px solid var(--border);border-radius:8px;padding:16px 20px;margin-bottom:10px;display:flex;align-items:flex-start;gap:14px;font-size:0.88rem;color:var(--text);line-height:1.7;}
+.step-num{background:var(--cyan);color:#fff;font-family:'Orbitron',monospace;font-size:0.7rem;font-weight:800;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+/* WPA3 */
+.wpa-compare{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px;}
+.wpa-card{background:var(--white);border:2px solid var(--border);border-radius:8px;padding:18px;text-align:center;}
+.wpa-card.bad{border-color:rgba(139,0,0,0.3);}
+.wpa-card.ok{border-color:rgba(200,140,0,0.3);}
+.wpa-card.good{border-color:rgba(0,136,106,0.3);}
+.wpa-name{font-family:'Orbitron',monospace;font-size:0.85rem;font-weight:900;margin-bottom:8px;}
+.wpa-card.bad .wpa-name{color:#8b0000;}
+.wpa-card.ok .wpa-name{color:#c88c00;}
+.wpa-card.good .wpa-name{color:var(--teal);}
+.wpa-desc{font-size:0.83rem;color:var(--text);line-height:1.6;margin-bottom:10px;}
+.wpa-status{font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:12px;}
+.wpa-card.bad .wpa-status{background:rgba(139,0,0,0.1);color:#8b0000;}
+.wpa-card.ok .wpa-status{background:rgba(200,140,0,0.1);color:#c88c00;}
+.wpa-card.good .wpa-status{background:rgba(0,136,106,0.1);color:var(--teal);}
+
+.wpa3-features{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px;}
+.wpa3-feature{background:var(--white);border:2px solid rgba(0,136,106,0.2);border-radius:8px;padding:16px 18px;}
+.wpa3-feature-title{font-weight:800;color:var(--teal);font-size:0.86rem;margin-bottom:4px;}
+.wpa3-feature-desc{font-size:0.83rem;color:var(--text);line-height:1.6;}
+
+/* NETWORK SEPARATION */
+.network-diagram{background:var(--white);border:2px solid var(--border);border-radius:10px;padding:28px;margin-bottom:24px;}
+.network-diagram h3{font-family:'Orbitron',monospace;font-size:0.8rem;font-weight:800;color:var(--heading);margin-bottom:20px;text-align:center;letter-spacing:2px;}
+.net-zones{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.net-zone{border-radius:8px;padding:16px;text-align:center;}
+.net-zone.corp{background:rgba(0,95,138,0.08);border:2px solid rgba(0,95,138,0.3);}
+.net-zone.guest{background:rgba(0,136,106,0.08);border:2px solid rgba(0,136,106,0.3);}
+.net-zone.iot{background:rgba(200,140,0,0.08);border:2px solid rgba(200,140,0,0.3);}
+.net-zone-icon{font-size:1.5rem;margin-bottom:8px;}
+.net-zone-name{font-family:'Orbitron',monospace;font-size:0.72rem;font-weight:800;margin-bottom:6px;}
+.net-zone.corp .net-zone-name{color:var(--cyan);}
+.net-zone.guest .net-zone-name{color:var(--teal);}
+.net-zone.iot .net-zone-name{color:#c88c00;}
+.net-zone-items{font-size:0.78rem;color:var(--text);line-height:1.7;}
+
+.separation-steps{list-style:none;margin-bottom:24px;}
+.separation-steps li{background:var(--white);border:2px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:10px;font-size:0.87rem;color:var(--text);line-height:1.7;display:flex;gap:10px;}
+.separation-steps li::before{content:'📡';flex-shrink:0;}
+
+/* MANAGEMENT */
+.mgmt-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:28px;}
+.mgmt-card{background:var(--white);border:2px solid var(--border);border-radius:8px;padding:20px;}
+.mgmt-icon{font-size:1.6rem;margin-bottom:10px;}
+.mgmt-title{font-weight:800;color:var(--heading);font-size:0.9rem;margin-bottom:8px;}
+.mgmt-desc{font-size:0.85rem;color:var(--text);line-height:1.75;}
+
+.tools-list{background:var(--white);border:2px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:28px;}
+.tool-row{display:grid;grid-template-columns:1fr 2fr 1fr;padding:14px 18px;border-bottom:1px solid var(--border);}
+.tool-row:last-child{border-bottom:none;}
+.tool-row.header{background:var(--bg2);}
+.tool-row.header div{font-family:'Orbitron',monospace;font-size:0.72rem;font-weight:800;color:var(--heading);letter-spacing:1px;}
+.tool-row div{font-size:0.85rem;color:var(--text);}
+.tool-name{font-weight:700;color:var(--cyan);}
+.tool-free{color:var(--teal);font-weight:600;}
+
+.tip-box{background:rgba(0,136,106,0.07);border:1px solid rgba(0,136,106,0.25);border-radius:6px;padding:14px 18px;margin:16px 0;}
+.tip-box strong{color:var(--teal);font-size:0.85rem;display:block;margin-bottom:4px;font-family:'Orbitron',monospace;letter-spacing:1px;}
+.tip-box p{font-size:0.87rem;color:var(--text);line-height:1.7;margin:0;}
+
+/* SUMMARY */
+.summary-box{background:linear-gradient(135deg,#003f5e,#005f8a);border-radius:10px;padding:36px 32px;margin-top:48px;color:#fff;text-align:center;}
+.summary-box h3{font-family:'Orbitron',monospace;font-size:1rem;font-weight:800;margin-bottom:12px;color:#a8e0ff;}
+.summary-box p{font-size:0.92rem;color:rgba(255,255,255,0.85);line-height:1.8;margin-bottom:20px;}
+.summary-box a{display:inline-block;background:#fff;color:#003f5e;padding:12px 28px;border-radius:4px;font-family:'Orbitron',monospace;font-size:0.78rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;}
+.back-section{text-align:center;margin-top:40px;}
+.back-link{display:inline-flex;align-items:center;gap:8px;color:var(--cyan);font-weight:700;font-family:'Orbitron',monospace;font-size:0.82rem;}
+.back-link:hover{text-decoration:underline;}
+footer{background:var(--heading);color:rgba(255,255,255,0.6);text-align:center;padding:28px;font-size:0.85rem;}
+footer a{color:#7dd3f8;}
+@media(max-width:600px){
+  .nav-inner,.container{padding-right:16px;padding-left:16px;}
+  .article-hero{padding:90px 16px 40px;}
+  .article-hero h1{font-size:1.25rem;}
+  .wpa-compare,.wpa3-features,.net-zones,.mgmt-grid{grid-template-columns:1fr;}
+  .tool-row{grid-template-columns:1fr 2fr;}
+  .tool-row .tool-free{display:none;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="images/logo_small.png" alt="">Mor<span>Of</span>Sec</a>
+    <a href="articles.html" class="nav-back">&#8592; כל המאמרים</a>
+  </div>
+</nav>
+
+<section class="article-hero">
+  <div class="container">
+    <div class="article-tag">רשת</div>
+    <h1>אבטחת <span>רשת ביתית ומשרדית</span> — המדריך המלא</h1>
+    <div class="article-meta">
+      <span>✍️ אופיר שמשון</span>
+      <span>📅 מרץ 2026</span>
+      <span>⏱️ קריאה של 6 דקות</span>
+    </div>
+  </div>
+</section>
+
+
+<div style="width:100%;overflow:hidden;max-height:360px;"><img src="images/wifi-risks.jpg" alt="סכנות WiFi ציבורי" style="width:100%;max-height:360px;object-fit:cover;display:block;"></div>
+<section class="article-body">
+  <div class="container">
+        <div class="article-intro">
+      הנתב הביתי או המשרדי הוא שער הכניסה לכל הרשת שלך — ורוב האנשים לא נוגעים בהגדרות ברירת המחדל שלו. האקר שפורץ לנתב שלט על כל המכשירים ברשת. המדריך הזה יעזור לך לנעול את השער.
+    </div>
+
+        <h2 class="section-h">סיסמת ברירת מחדל — הסכנה הגדולה ביותר</h2>
+
+    <div class="danger-box">
+      <strong>⚠️ ידעת? כ-70% מהנתבים הביתיים פועלים עם סיסמת ברירת המחדל</strong>
+      <p>יצרנים כמו TP-Link, ASUS ו-D-Link מגיעים עם סיסמאות כמו "admin/admin" או "admin/1234". האקרים יודעים את כל סיסמאות ברירת המחדל בעל פה ובודקים אותן ראשונות. בדקת את הנתב שלך?</p>
+    </div>
+
+    <ul class="steps-list">
+      <li><div class="step-num">01</div><div><strong>כנס לממשק הנתב</strong> — בדרך כלל בכתובת 192.168.1.1 או 192.168.0.1 בדפדפן. כתובת ה-Gateway מופיעה בהגדרות הרשת של המחשב.</div></li>
+      <li><div class="step-num">02</div><div><strong>שנה את שם המשתמש והסיסמה</strong> — בחר סיסמה חזקה (12+ תווים). אל תשתמש בשם הרחוב, שם המשפחה או שנת הלידה.</div></li>
+      <li><div class="step-num">03</div><div><strong>שנה את שם הרשת (SSID)</strong> — אל תשתמש בשם שמזהה אותך (כמו "Shimshon Home WiFi"). שם ניטרלי קשה יותר לכיוון.</div></li>
+      <li><div class="step-num">04</div><div><strong>כבה ניהול מרחוק</strong> — Remote Management מאפשר גישה לנתב מאינטרנט. אלא אם אתה צריך זאת — כבה אותו.</div></li>
+      <li><div class="step-num">05</div><div><strong>עדכן קושחה (Firmware)</strong> — בדוק אחת לרבעון אם יש עדכון קושחה לנתב. עדכונים סוגרים חולשות אבטחה ידועות.</div></li>
+    </ul>
+
+    <h2 class="section-h">מה זה WPA3 ולמה זה חשוב</h2>
+
+    <div class="wpa-compare">
+      <div class="wpa-card bad">
+        <div class="wpa-name">WEP</div>
+        <div class="wpa-desc">פרוטוקול ישן מ-1997. נפרץ תוך דקות ספורות עם כלים חינמיים.</div>
+        <span class="wpa-status">מיושן לחלוטין</span>
+      </div>
+      <div class="wpa-card ok">
+        <div class="wpa-name">WPA2</div>
+        <div class="wpa-desc">הסטנדרט הנפוץ כיום. בטוח עם סיסמה חזקה, אך פגיע לחלק מהמתקפות.</div>
+        <span class="wpa-status">מקובל</span>
+      </div>
+      <div class="wpa-card good">
+        <div class="wpa-name">WPA3</div>
+        <div class="wpa-desc">הסטנדרט החדש מ-2018. הצפנה חזקה יותר, עמיד בפני מתקפות ניחוש סיסמה.</div>
+        <span class="wpa-status">מומלץ</span>
+      </div>
+    </div>
+
+    <div class="wpa3-features">
+      <div class="wpa3-feature">
+        <div class="wpa3-feature-title">🔐 הצפנה אישית</div>
+        <div class="wpa3-feature-desc">כל מכשיר ברשת מקבל הצפנה ייחודית — גם אם מישהו יאזין לתעבורה, לא יוכל לפענח.</div>
+      </div>
+      <div class="wpa3-feature">
+        <div class="wpa3-feature-title">🛡️ עמידות לניחוש סיסמה</div>
+        <div class="wpa3-feature-desc">מגביל ניסיונות כניסה — מתקפות Brute Force על הסיסמה הופכות לא כדאיות.</div>
+      </div>
+      <div class="wpa3-feature">
+        <div class="wpa3-feature-title">📶 Easy Connect</div>
+        <div class="wpa3-feature-desc">חיבור מכשירי IoT ללא מסך (מצלמות, נורות חכמות) בצורה מאובטחת דרך QR Code.</div>
+      </div>
+      <div class="wpa3-feature">
+        <div class="wpa3-feature-title">🌐 Forward Secrecy</div>
+        <div class="wpa3-feature-desc">גם אם הסיסמה תיחשף בעתיד — תעבורה עבר לא תוכל להיפרץ. הגנה לטווח ארוך.</div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>✅ מה לעשות עכשיו</strong>
+      <p>כנס להגדרות הנתב ← Wireless Security ← בחר WPA3 או לפחות WPA2/WPA3 Mixed. אם הנתב לא תומך ב-WPA3 — שקול להחליפו, במיוחד אם הוא ישן מ-2018.</p>
+    </div>
+
+    <h2 class="section-h">הפרדת רשת המשרד מרשת אורחים</h2>
+
+    <div class="network-diagram">
+      <h3>מבנה רשת מאובטח — 3 אזורים נפרדים</h3>
+      <div class="net-zones">
+        <div class="net-zone corp">
+          <div class="net-zone-icon">🏢</div>
+          <div class="net-zone-name">רשת עסקית</div>
+          <div class="net-zone-items">מחשבי עובדים<br>שרתים<br>מדפסות<br>נתוני לקוחות</div>
+        </div>
+        <div class="net-zone guest">
+          <div class="net-zone-icon">👥</div>
+          <div class="net-zone-name">רשת אורחים</div>
+          <div class="net-zone-items">לקוחות מבקרים<br>טלפונים אישיים<br>גישה לאינטרנט בלבד</div>
+        </div>
+        <div class="net-zone iot">
+          <div class="net-zone-icon">📡</div>
+          <div class="net-zone-name">רשת IoT</div>
+          <div class="net-zone-items">מצלמות אבטחה<br>מדפסות<br>מכשירים חכמים</div>
+        </div>
+      </div>
+    </div>
+
+    <ul class="separation-steps">
+      <li>הפעל <strong>Guest Network</strong> בנתב — רוב הנתבים המודרניים תומכים בכך. לקוחות מתחברים לרשת נפרדת ואינם יכולים לגשת למחשבי הארגון.</li>
+      <li>הגדר <strong>VLAN</strong> לעסקים — מפריד לוגית בין רשתות על אותה תשתית פיזית. דורש נתב/switch תומך ב-VLAN.</li>
+      <li>כבה את <strong>Client Isolation</strong> ברשת האורחים — מונע תקשורת ישירה בין מכשירים באותה רשת (למשל בין לקוחות שמחוברים).</li>
+      <li>הגדר <strong>סיסמה שונה</strong> לרשת האורחים — ושנה אותה מדי פעם. כך לקוח שהתחבר בעבר לא יוכל להתחבר שוב ללא אישור.</li>
+    </ul>
+
+    <h2 class="section-h">ניהול ציוד רשת וניטור תעבורה</h2>
+
+    <div class="mgmt-grid">
+      <div class="mgmt-card">
+        <div class="mgmt-icon">📋</div>
+        <div class="mgmt-title">תיעוד ציוד רשת</div>
+        <div class="mgmt-desc">ערוך רשימה של כל ציוד הרשת — נתבים, מתגים, נקודות גישה. כלול דגם, כתובת IP, מיקום ותאריך רכישה. ציוד לא ידוע הוא ציוד לא מנוהל.</div>
+      </div>
+      <div class="mgmt-card">
+        <div class="mgmt-icon">🔍</div>
+        <div class="mgmt-title">בדיקת מכשירים מחוברים</div>
+        <div class="mgmt-desc">אחת לשבוע — בדוק בממשק הנתב אילו מכשירים מחוברים לרשת. מכשיר לא מוכר עלול להיות פורץ שחדר לרשת.</div>
+      </div>
+      <div class="mgmt-card">
+        <div class="mgmt-icon">📊</div>
+        <div class="mgmt-title">ניטור תעבורה חריגה</div>
+        <div class="mgmt-desc">תעבורה גבוהה בלילה, חיבורים לכתובות זרות, העלאה מסיבית — כל אלה עשויים להצביע על פריצה, כופרה או גניבת מידע.</div>
+      </div>
+      <div class="mgmt-card">
+        <div class="mgmt-icon">🔄</div>
+        <div class="mgmt-title">עדכוני קושחה תקופתיים</div>
+        <div class="mgmt-desc">הגדר תזכורת רבעונית לבדיקת עדכוני קושחה לכל ציוד הרשת. יצרנים משחררים עדכוני אבטחה שסוגרים חולשות ידועות.</div>
+      </div>
+    </div>
+
+    <div class="tools-list">
+      <div class="tool-row header">
+        <div>כלי</div>
+        <div>שימוש</div>
+        <div>עלות</div>
+      </div>
+      <div class="tool-row">
+        <div class="tool-name">Wireshark</div>
+        <div>ניתוח תעבורת רשת מעמיק — רואה כל פקטה ברשת</div>
+        <div class="tool-free">חינמי</div>
+      </div>
+      <div class="tool-row">
+        <div class="tool-name">Nmap</div>
+        <div>סריקת רשת — מזהה מכשירים, פורטים פתוחים ושירותים</div>
+        <div class="tool-free">חינמי</div>
+      </div>
+      <div class="tool-row">
+        <div class="tool-name">Fing</div>
+        <div>אפליקציית סלולרי לסריקת מכשירים ברשת — פשוט ומהיר</div>
+        <div class="tool-free">חינמי</div>
+      </div>
+      <div class="tool-row">
+        <div class="tool-name">PRTG</div>
+        <div>ניטור רשת מקיף לעסקים — התראות בזמן אמת</div>
+        <div>בתשלום</div>
+      </div>
+      <div class="tool-row">
+        <div class="tool-name">GlassWire</div>
+        <div>ניטור תעבורה ויזואלי — מזהה אפליקציות שמשתמשות ברשת</div>
+        <div>חינמי / Pro</div>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>✅ 3 דברים לעשות היום</strong>
+      <p>1. שנה את סיסמת הנתב מברירת המחדל. 2. הפעל WPA3 או לפחות WPA2. 3. צור רשת אורחים נפרדת. אלה שלושת הצעדים עם ההשפעה הגדולה ביותר על אבטחת הרשת שלך.</p>
+    </div>
+
+    <div class="summary-box">
+      <h3>רוצה ביקורת אבטחה לרשת העסקית שלך?</h3>
+      <p>MorOfSec מבצעת ביקורת רשת מקיפה — סריקת מכשירים, בדיקת הגדרות, זיהוי חולשות והמלצות מעשיות.</p>
+      <a href="index.html#contact">צור קשר לייעוץ</a>
+    </div>
+
+    <div class="back-section">
+      <a href="articles.html" class="back-link">&#8592; חזרה לכל המאמרים</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 MorOfSec | <a href="/cdn-cgi/l/email-protection#731e1c011c15001610444733141e121a1f5d101c1e"><span class="__cf_email__" data-cfemail="bdd0d2cfd2dbced8d

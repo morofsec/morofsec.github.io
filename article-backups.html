@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>גיבויים — המדריך המלא | MorOfSec</title>
+<meta name="description" content="גיבוי בענן מול מקומי, תדירות מומלצת, טעויות נפוצות ומדיניות גיבוי לעסקים. מאת אופיר שמשון, MorOfSec">
+<meta name="keywords" content="גיבוי נתונים, גיבוי ענן, גיבוי מקומי, כלל 3-2-1, מדיניות גיבוי, שחזור נתונים">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://morofsec.com/article-backups.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#f0f4f8;--bg2:#e8edf3;--white:#fff;--heading:#0a1e2e;--text:#1a3040;--muted:#2d5068;--cyan:#005f8a;--teal:#00886a;--border:#d0dce8;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Heebo',sans-serif;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+nav{position:fixed;top:0;width:100%;z-index:100;padding:18px 0;backdrop-filter:blur(20px);border-bottom:1px solid var(--border);background:rgba(240,244,248,0.95);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding:0 40px;}
+.nav-logo{font-family:'Orbitron',monospace;font-size:1.4rem;font-weight:900;color:var(--heading);letter-spacing:2px;display:flex;align-items:center;gap:10px;}
+.nav-logo img{width:36px;height:36px;object-fit:contain;border-radius:50%;border:2px solid var(--cyan);background:var(--white);}
+.nav-logo span{color:var(--cyan);}
+.nav-back{display:flex;align-items:center;gap:8px;color:var(--cyan);font-weight:600;font-size:0.9rem;}
+.nav-back:hover{text-decoration:underline;}
+.container{max-width:860px;margin:0 auto;padding:0 40px;}
+.article-hero{padding:110px 0 50px;background:linear-gradient(135deg,#004d30,#006b47);color:#fff;text-align:center;}
+.article-tag{display:inline-block;background:rgba(100,255,180,0.15);color:#7dffc0;font-size:0.72rem;font-weight:700;letter-spacing:3px;padding:5px 14px;border-radius:20px;font-family:'Orbitron',monospace;text-transform:uppercase;margin-bottom:20px;}
+.article-hero h1{font-family:'Orbitron',monospace;font-size:1.7rem;font-weight:900;line-height:1.3;margin-bottom:16px;}
+.article-hero h1 span{color:#7dffc0;}
+.article-meta{display:flex;align-items:center;justify-content:center;gap:24px;font-size:0.85rem;color:rgba(255,255,255,0.65);margin-top:20px;flex-wrap:wrap;}
+.article-body{padding:56px 0 80px;}
+.article-intro{font-size:1.05rem;color:var(--text);line-height:1.95;margin-bottom:48px;padding:24px 28px;background:var(--white);border-radius:8px;border-right:4px solid var(--teal);font-weight:500;}
+.section-h{font-family:'Orbitron',monospace;font-size:0.85rem;font-weight:800;color:var(--heading);letter-spacing:2px;text-transform:uppercase;margin:48px 0 20px;padding-bottom:10px;border-bottom:2px solid var(--border);}
+
+/* COMPARE */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:32px;}
+.compare-card{background:var(--white);border:2px solid var(--border);border-radius:8px;overflow:hidden;}
+.compare-header{padding:14px 20px;font-family:'Orbitron',monospace;font-size:0.82rem;font-weight:800;display:flex;align-items:center;gap:10px;}
+.compare-header.cloud{background:rgba(0,95,138,0.08);color:var(--cyan);}
+.compare-header.local{background:rgba(0,136,106,0.08);color:var(--teal);}
+.compare-body{padding:18px 20px;}
+.compare-list{list-style:none;}
+.compare-list li{font-size:0.86rem;color:var(--text);line-height:1.75;padding:5px 0;border-bottom:1px solid var(--bg2);}
+.compare-list li:last-child{border-bottom:none;}
+.compare-list li.pro::before{content:'✅ ';}
+.compare-list li.con::before{content:'❌ ';}
+
+/* 321 RULE */
+.rule-321{background:linear-gradient(135deg,#0a1e2e,#1a3a52);border-radius:10px;padding:32px;margin-bottom:32px;color:#fff;text-align:center;}
+.rule-321 h3{font-family:'Orbitron',monospace;font-size:0.9rem;font-weight:800;color:#7dd3f8;margin-bottom:24px;letter-spacing:2px;}
+.rule-numbers{display:flex;justify-content:center;gap:32px;flex-wrap:wrap;}
+.rule-num{text-align:center;}
+.rule-num .num{font-family:'Orbitron',monospace;font-size:3rem;font-weight:900;color:#7dd3f8;line-height:1;}
+.rule-num .label{font-size:0.85rem;color:rgba(255,255,255,0.8);margin-top:8px;line-height:1.5;}
+
+/* FREQUENCY */
+.freq-table{background:var(--white);border:2px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:32px;}
+.freq-row{display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid var(--border);}
+.freq-row:last-child{border-bottom:none;}
+.freq-row.header{background:var(--bg2);}
+.freq-cell{padding:14px 18px;font-size:0.87rem;color:var(--text);}
+.freq-row.header .freq-cell{font-family:'Orbitron',monospace;font-size:0.75rem;font-weight:800;color:var(--heading);letter-spacing:1px;}
+
+/* MISTAKES */
+.mistake{background:var(--white);border:2px solid var(--border);border-radius:8px;padding:22px 24px;margin-bottom:18px;border-right:4px solid #8b0000;transition:border-color 0.3s;}
+.mistake-title{font-weight:800;color:#8b0000;font-size:0.9rem;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.mistake-desc{font-size:0.88rem;color:var(--text);line-height:1.8;margin-bottom:10px;}
+.tip-box{background:rgba(0,136,106,0.07);border:1px solid rgba(0,136,106,0.25);border-radius:6px;padding:12px 16px;}
+.tip-box strong{color:var(--teal);font-size:0.83rem;display:block;margin-bottom:3px;font-family:'Orbitron',monospace;letter-spacing:1px;}
+.tip-box p{font-size:0.85rem;color:var(--text);line-height:1.7;margin:0;}
+
+/* POLICY */
+.policy-steps{counter-reset:step;}
+.policy-step{background:var(--white);border:2px solid var(--border);border-radius:8px;padding:20px 20px 20px 26px;margin-bottom:14px;position:relative;border-right:4px solid var(--teal);}
+.step-title{font-weight:800;color:var(--heading);margin-bottom:8px;font-size:0.92rem;}
+.step-desc{font-size:0.87rem;color:var(--text);line-height:1.75;}
+
+/* SUMMARY */
+.summary-box{background:linear-gradient(135deg,#004d30,#006b47);border-radius:10px;padding:36px 32px;margin-top:48px;color:#fff;text-align:center;}
+.summary-box h3{font-family:'Orbitron',monospace;font-size:1rem;font-weight:800;margin-bottom:12px;color:#7dffc0;}
+.summary-box p{font-size:0.92rem;color:rgba(255,255,255,0.85);line-height:1.8;margin-bottom:20px;}
+.summary-box a{display:inline-block;background:#fff;color:#006b47;padding:12px 28px;border-radius:4px;font-family:'Orbitron',monospace;font-size:0.78rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;}
+.back-section{text-align:center;margin-top:40px;}
+.back-link{display:inline-flex;align-items:center;gap:8px;color:var(--cyan);font-weight:700;font-family:'Orbitron',monospace;font-size:0.82rem;}
+.back-link:hover{text-decoration:underline;}
+footer{background:var(--heading);color:rgba(255,255,255,0.6);text-align:center;padding:28px;font-size:0.85rem;}
+footer a{color:#7dd3f8;}
+@media(max-width:600px){
+  .nav-inner,.container{padding-right:16px;padding-left:16px;}
+  .article-hero{padding:90px 16px 40px;}
+  .article-hero h1{font-size:1.25rem;}
+  .compare-grid{grid-template-columns:1fr;}
+  .rule-numbers{gap:20px;}
+  .freq-row{grid-template-columns:1fr 1fr;}
+  .freq-row .freq-cell:last-child{display:none;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="images/logo_small.png" alt="">Mor<span>Of</span>Sec</a>
+    <a href="articles.html" class="nav-back">&#8592; כל המאמרים</a>
+  </div>
+</nav>
+
+<section class="article-hero">
+  <div class="container">
+    <div class="article-tag">גיבוי</div>
+    <h1><span>גיבויים</span> — המדריך המלא להגנה על הנתונים שלך</h1>
+    <div class="article-meta">
+      <span>✍️ אופיר שמשון</span>
+      <span>📅 מרץ 2026</span>
+      <span>⏱️ קריאה של 6 דקות</span>
+    </div>
+  </div>
+</section>
+
+
+<div style="width:100%;overflow:hidden;max-height:360px;"><img src="images/backup.jpg" alt="גיבוי נתונים" style="width:100%;max-height:360px;object-fit:cover;display:block;"></div>
+<section class="article-body">
+  <div class="container">
+        <div class="article-intro">
+      93% מהחברות שאיבדו נתונים לתקופה ממושכת נסגרו תוך 5 שנים. גיבוי נכון הוא לא מותרות — הוא הבסיס להמשכיות עסקית. המדריך הזה יעזור לך להבין מה לגבות, איך לגבות ואיך לוודא שהגיבוי אכן עובד.
+    </div>
+
+        <h2 class="section-h">גיבוי בענן מול גיבוי מקומי</h2>
+    <div class="compare-grid">
+      <div class="compare-card">
+        <div class="compare-header cloud">☁️ גיבוי בענן</div>
+        <div class="compare-body">
+          <ul class="compare-list">
+            <li class="pro">גישה מכל מקום ומכל מכשיר</li>
+            <li class="pro">מוגן מאש, גניבה ונזקי מים</li>
+            <li class="pro">גיבוי אוטומטי ושוטף</li>
+            <li class="pro">קל להגדרה ולניהול</li>
+            <li class="con">תלות בחיבור אינטרנט</li>
+            <li class="con">עלות חודשית שוטפת</li>
+            <li class="con">שחזור גדול לוקח זמן</li>
+          </ul>
+        </div>
+      </div>
+      <div class="compare-card">
+        <div class="compare-header local">💾 גיבוי מקומי</div>
+        <div class="compare-body">
+          <ul class="compare-list">
+            <li class="pro">שחזור מהיר — ללא תלות באינטרנט</li>
+            <li class="pro">תשלום חד-פעמי לחומרה</li>
+            <li class="pro">שליטה מלאה על הנתונים</li>
+            <li class="pro">מתאים לנתונים רגישים</li>
+            <li class="con">פגיע לאש, גניבה, נזק פיזי</li>
+            <li class="con">כופרה יכולה להגיע גם אליו</li>
+            <li class="con">דורש ניהול ידני</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-321">
+      <h3>כלל 3-2-1 — הסטנדרט הזהוב לגיבוי</h3>
+      <div class="rule-numbers">
+        <div class="rule-num">
+          <div class="num">3</div>
+          <div class="label">עותקים<br>של הנתונים</div>
+        </div>
+        <div class="rule-num">
+          <div class="num">2</div>
+          <div class="label">סוגי מדיה<br>שונים</div>
+        </div>
+        <div class="rule-num">
+          <div class="num">1</div>
+          <div class="label">עותק מחוץ<br>לאתר (ענן)</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-h">תדירות מומלצת לגיבויים</h2>
+    <div class="freq-table">
+      <div class="freq-row header">
+        <div class="freq-cell">סוג משתמש</div>
+        <div class="freq-cell">תדירות מומלצת</div>
+        <div class="freq-cell">שיטה מומלצת</div>
+      </div>
+      <div class="freq-row">
+        <div class="freq-cell">משתמש פרטי</div>
+        <div class="freq-cell">שבועי לפחות</div>
+        <div class="freq-cell">Google Drive / iCloud אוטומטי</div>
+      </div>
+      <div class="freq-row">
+        <div class="freq-cell">עסק קטן</div>
+        <div class="freq-cell">יומי</div>
+        <div class="freq-cell">ענן + דיסק חיצוני שבועי</div>
+      </div>
+      <div class="freq-row">
+        <div class="freq-cell">עסק בינוני</div>
+        <div class="freq-cell">יומי + שבועי + חודשי</div>
+        <div class="freq-cell">3-2-1 מלא עם בדיקות שחזור</div>
+      </div>
+      <div class="freq-row">
+        <div class="freq-cell">מידע קריטי</div>
+        <div class="freq-cell">בזמן אמת / שעתי</div>
+        <div class="freq-cell">Replication לאתר חלופי</div>
+      </div>
+    </div>
+
+    <h2 class="section-h">טעויות נפוצות בגיבוי</h2>
+
+    <div class="mistake">
+      <div class="mistake-title">⚠️ גיבוי על אותו מחשב</div>
+      <div class="mistake-desc">הטעות הנפוצה ביותר — שמירת הגיבוי באותו דיסק קשיח או אותה מחשב. כשהמחשב מקרס, נגנב או נפגע מכופרה — גם הגיבוי נעלם.</div>
+      <div class="tip-box"><strong>✅ הפתרון</strong><p>גיבוי תמיד על מדיה נפרדת — דיסק חיצוני שמנותק מהמחשב לאחר הגיבוי, ענן, או שניהם.</p></div>
+    </div>
+
+    <div class="mistake">
+      <div class="mistake-title">⚠️ לא בודקים שהגיבוי עובד</div>
+      <div class="mistake-desc">אנשים רבים מגבים שנים — ורק בעת קריסה מגלים שהגיבוי פגום, חסר או שאי-אפשר לשחזר ממנו. גיבוי לא נבדק הוא לא גיבוי.</div>
+      <div class="tip-box"><strong>✅ הפתרון</strong><p>בצע שחזור ניסיוני אחת לחודש — בחר קובץ אקראי, שחזר אותו ווודא שהוא תקין.</p></div>
+    </div>
+
+    <div class="mistake">
+      <div class="mistake-title">⚠️ גיבוי מחובר תמיד לרשת</div>
+      <div class="mistake-desc">דיסק חיצוני שמחובר כל הזמן למחשב — כופרה תצפין גם אותו. כופרה מחפשת כל כונן מחובר ומצפינה אותו אוטומטית.</div>
+      <div class="tip-box"><strong>✅ הפתרון</strong><p>נתק את דיסק הגיבוי מיד לאחר הגיבוי. חבר רק כשצריך לגבות או לשחזר.</p></div>
+    </div>
+
+    <div class="mistake">
+      <div class="mistake-title">⚠️ גיבוי ללא הצפנה</div>
+      <div class="mistake-desc">גיבוי לא מוצפן שנגנב חושף את כל המידע לגנב. מידע רגיש — לקוחות, חשבונות, חוזים — חייב להיות מוצפן גם בגיבוי.</div>
+      <div class="tip-box"><strong>✅ הפתרון</strong><p>הפעל הצפנה בתוכנת הגיבוי. רוב הפתרונות הענניים מצפינים אוטומטית — וודא שזה מופעל.</p></div>
+    </div>
+
+    <h2 class="section-h">מדיניות גיבוי לעסק ובדיקות שחזור</h2>
+
+    <div class="policy-step">
+      <div class="step-title">1. הגדר מה חייב להיות מגובה</div>
+      <div class="step-desc">לא כל קובץ חשוב באותה מידה. דרג: נתוני לקוחות, חשבונאות, קבצי עבודה פעילים, הגדרות מערכת. התחל מהחשוב ביותר.</div>
+    </div>
+    <div class="policy-step">
+      <div class="step-title">2. קבע תדירות וסוג גיבוי לכל קטגוריה</div>
+      <div class="step-desc">נתוני לקוחות — גיבוי יומי. קבצי עבודה — יומי. הגדרות שרת — שבועי. מסמכים כלליים — שבועי.</div>
+    </div>
+    <div class="policy-step">
+      <div class="step-title">3. הגדר מי אחראי על הגיבוי</div>
+      <div class="step-desc">בלי אחריות ברורה — הגיבוי לא קורה. מנה עובד אחד כ"אחראי גיבויים" ווודא שיש לו גיבוי לאחריות (עובד ממלא מקום).</div>
+    </div>
+    <div class="policy-step">
+      <div class="step-title">4. בדיקת שחזור חודשית</div>
+      <div class="step-desc">אחת לחודש — שחזר קובץ או תיקייה ספציפיים ממדיית הגיבוי ווודא שניתן לפתוח ולהשתמש בהם. תעד את הבדיקה.</div>
+    </div>
+    <div class="policy-step">
+      <div class="step-title">5. תרגיל שחזור מלא — אחת לשנה</div>
+      <div class="step-desc">סמלץ תרחיש של קריסה מוחלטת — כמה זמן לוקח לשחזר את כל המערכות? מה הRPO וה-RTO שלך? תרגיל זה חושף חולשות לפני אסון אמיתי.</div>
+    </div>
+
+    <div class="summary-box">
+      <h3>רוצה לבנות מדיניות גיבוי לעסק שלך?</h3>
+      <p>MorOfSec מסייעת לעסקים לבנות תהליכי גיבוי ושחזור מקיפים — כולל בדיקות שחזור תקופתיות ונהלים כתובים.</p>
+      <a href="index.html#contact">צור קשר לייעוץ</a>
+    </div>
+
+    <div class="back-section">
+      <a href="articles.html" class="back-link">&#8592; חזרה לכל המאמרים</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 MorOfSec | <a href="/cdn-cgi/l/email-protection#e18c8e938e87928482d6d5a1868c80888dcf828e8c"><span class="__cf_email__" data-cfemail="b9d4d6cbd6dfcadcd

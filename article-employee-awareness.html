@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מודעות עובדים לאבטחת מידע | MorOfSec</title>
+<meta name="description" content="95% מהפרצות נגרמות בטעות אנוש. כיצד להכשיר עובדים להיות קו ההגנה הראשון. מאת אופיר שמשון, MorOfSec">
+<meta name="keywords" content="מודעות עובדים, הדרכת אבטחה, אבטחת מידע ארגונית, הכשרת עובדים, טעות אנוש סייבר">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://morofsec.com/article-employee-awareness.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#f0f4f8;--bg2:#e8edf3;--white:#fff;--heading:#0a1e2e;--text:#1a3040;--muted:#2d5068;--cyan:#005f8a;--teal:#00886a;--border:#d0dce8;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Heebo',sans-serif;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+nav{position:fixed;top:0;width:100%;z-index:100;padding:18px 0;backdrop-filter:blur(20px);border-bottom:1px solid var(--border);background:rgba(240,244,248,0.95);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding:0 40px;}
+.nav-logo{font-family:'Orbitron',monospace;font-size:1.4rem;font-weight:900;color:var(--heading);letter-spacing:2px;display:flex;align-items:center;gap:10px;}
+.nav-logo img{width:36px;height:36px;object-fit:contain;border-radius:50%;border:2px solid var(--cyan);background:var(--white);}
+.nav-logo span{color:var(--cyan);}
+.nav-back{display:flex;align-items:center;gap:8px;color:var(--cyan);font-weight:600;font-size:0.9rem;}
+.nav-back:hover{text-decoration:underline;}
+.container{max-width:860px;margin:0 auto;padding:0 40px;}
+.article-hero{padding:110px 0 50px;background:linear-gradient(135deg,#003f5e,#005f8a);color:#fff;text-align:center;}
+.article-tag{display:inline-block;background:rgba(100,200,255,0.15);color:#a8e0ff;font-size:0.72rem;font-weight:700;letter-spacing:3px;padding:5px 14px;border-radius:20px;font-family:'Orbitron',monospace;text-transform:uppercase;margin-bottom:20px;}
+.article-hero h1{font-family:'Orbitron',monospace;font-size:1.7rem;font-weight:900;line-height:1.3;margin-bottom:16px;}
+.article-hero h1 span{color:#a8e0ff;}
+.article-meta{display:flex;align-items:center;justify-content:center;gap:24px;font-size:0.85rem;color:rgba(255,255,255,0.65);margin-top:20px;flex-wrap:wrap;}
+.article-body{padding:56px 0 80px;}
+.article-intro{font-size:1.05rem;color:var(--text);line-height:1.95;margin-bottom:48px;padding:24px 28px;background:var(--white);border-radius:8px;border-right:4px solid var(--cyan);font-weight:500;}
+.section-h{font-family:'Orbitron',monospace;font-size:0.85rem;font-weight:800;color:var(--heading);letter-spacing:2px;text-transform:uppercase;margin:48px 0 20px;padding-bottom:10px;border-bottom:2px solid var(--border);}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;}
+.stat-card{background:linear-gradient(135deg,#0a1e2e,#1a3a52);border-radius:8px;padding:24px;text-align:center;color:#fff;}
+.stat-num{font-family:'Orbitron',monospace;font-size:2.2rem;font-weight:900;color:#a8e0ff;line-height:1;}
+.stat-label{font-size:0.82rem;color:rgba(255,255,255,0.75);margin-top:8px;line-height:1.5;}
+.mistake-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:28px;}
+.mistake-card{background:var(--white);border:2px solid var(--border);border-radius:8px;padding:18px;border-right:4px solid #8b0000;}
+.mistake-icon{font-size:1.5rem;margin-bottom:8px;}
+.mistake-title{font-weight:800;color:#8b0000;font-size:0.88rem;margin-bottom:6px;}
+.mistake-desc{font-size:0.84rem;color:var(--text);line-height:1.7;}
+.training-steps{counter-reset:step;}
+.training-step{background:var(--white);border:2px solid var(--border);border-radius:8px;padding:20px 20px 20px 26px;margin-bottom:14px;border-right:4px solid var(--teal);}
+.step-title{font-weight:800;color:var(--heading);margin-bottom:8px;font-size:0.92rem;}
+.step-desc{font-size:0.87rem;color:var(--text);line-height:1.75;}
+.topics-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:28px;}
+.topic-card{background:var(--white);border:2px solid var(--border);border-radius:8px;padding:18px;}
+.topic-icon{font-size:1.4rem;margin-bottom:8px;}
+.topic-title{font-weight:800;color:var(--heading);font-size:0.88rem;margin-bottom:6px;}
+.topic-desc{font-size:0.84rem;color:var(--text);line-height:1.7;}
+.tip-box{background:rgba(0,136,106,0.07);border:1px solid rgba(0,136,106,0.25);border-radius:6px;padding:14px 18px;margin:16px 0;}
+.tip-box strong{color:var(--teal);font-size:0.85rem;display:block;margin-bottom:4px;font-family:'Orbitron',monospace;letter-spacing:1px;}
+.tip-box p{font-size:0.87rem;color:var(--text);line-height:1.7;margin:0;}
+.culture-list{list-style:none;margin-bottom:28px;}
+.culture-list li{background:var(--white);border:2px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:10px;font-size:0.87rem;color:var(--text);line-height:1.7;display:flex;gap:10px;}
+.summary-box{background:linear-gradient(135deg,#003f5e,#005f8a);border-radius:10px;padding:36px 32px;margin-top:48px;color:#fff;text-align:center;}
+.summary-box h3{font-family:'Orbitron',monospace;font-size:1rem;font-weight:800;margin-bottom:12px;color:#a8e0ff;}
+.summary-box p{font-size:0.92rem;color:rgba(255,255,255,0.85);line-height:1.8;margin-bottom:20px;}
+.summary-box a{display:inline-block;background:#fff;color:#003f5e;padding:12px 28px;border-radius:4px;font-family:'Orbitron',monospace;font-size:0.78rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;}
+.back-section{text-align:center;margin-top:40px;}
+.back-link{display:inline-flex;align-items:center;gap:8px;color:var(--cyan);font-weight:700;font-family:'Orbitron',monospace;font-size:0.82rem;}
+.back-link:hover{text-decoration:underline;}
+footer{background:var(--heading);color:rgba(255,255,255,0.6);text-align:center;padding:28px;font-size:0.85rem;}
+footer a{color:#7dd3f8;}
+@media(max-width:600px){
+  .nav-inner,.container{padding-right:16px;padding-left:16px;}
+  .article-hero{padding:90px 16px 40px;}
+  .article-hero h1{font-size:1.25rem;}
+  .stat-grid{grid-template-columns:1fr;}
+  .mistake-grid,.topics-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="images/logo_small.png" alt="">Mor<span>Of</span>Sec</a>
+    <a href="articles.html" class="nav-back">&#8592; כל המאמרים</a>
+  </div>
+</nav>
+
+<section class="article-hero">
+  <div class="container">
+    <div class="article-tag">הדרכה</div>
+    <h1><span>מודעות עובדים</span> — קו ההגנה הראשון</h1>
+    <div class="article-meta">
+      <span>✍️ אופיר שמשון</span>
+      <span>📅 מרץ 2026</span>
+      <span>⏱️ קריאה של 6 דקות</span>
+    </div>
+  </div>
+</section>
+
+<section class="article-body">
+  <div class="container">
+    <div class="article-intro">
+      הטכנולוגיה הטובה ביותר — חומות אש, אנטי-וירוס, הצפנה — לא שווה דבר אם עובד אחד לוחץ על קישור פישינג. 95% מהפרצות הסייבר כוללות טעות אנוש. העובדים הם לא החוליה החלשה — הם קו ההגנה הראשון, אם מכשירים אותם נכון.
+    </div>
+
+    <h2 class="section-h">המספרים מדברים בעד עצמם</h2>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-num">95%</div>
+        <div class="stat-label">מהפרצות כוללות טעות אנוש</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">82%</div>
+        <div class="stat-label">מהפרצות מתחילות בפישינג</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">70%</div>
+        <div class="stat-label">הפחתת פרצות אחרי הדרכה</div>
+      </div>
+    </div>
+
+    <h2 class="section-h">הטעויות הנפוצות של עובדים</h2>
+    <div class="mistake-grid">
+      <div class="mistake-card">
+        <div class="mistake-icon">📧</div>
+        <div class="mistake-title">לחיצה על קישורי פישינג</div>
+        <div class="mistake-desc">מייל שנראה מהבוס, מהבנק או מהדואר — עובד לא מודרך לוחץ ללא בדיקה.</div>
+      </div>
+      <div class="mistake-card">
+        <div class="mistake-icon">🔑</div>
+        <div class="mistake-title">סיסמאות חלשות ומשותפות</div>
+        <div class="mistake-desc">שימוש בסיסמאות פשוטות, כתיבת סיסמאות על פתקים, שיתוף סיסמאות בין עובדים.</div>
+      </div>
+      <div class="mistake-card">
+        <div class="mistake-icon">💾</div>
+        <div class="mistake-title">חיבור USB לא מוכר</div>
+        <div class="mistake-desc">USB שנמצא בחניה או נשלח בדואר — תוקפים משתמשים בזה בתדירות גבוהה.</div>
+      </div>
+      <div class="mistake-card">
+        <div class="mistake-icon">📱</div>
+        <div class="mistake-title">עבודה ברשתות ציבוריות</div>
+        <div class="mistake-desc">חיבור לרשת WiFi ציבורית עם מחשב עבודה ללא VPN — חשיפה של נתוני הארגון.</div>
+      </div>
+      <div class="mistake-card">
+        <div class="mistake-icon">🖥️</div>
+        <div class="mistake-title">מסך לא נעול</div>
+        <div class="mistake-desc">עזיבת מחשב פתוח ללא נעילה — כל אחד שעובר יכול לגשת למידע.</div>
+      </div>
+      <div class="mistake-card">
+        <div class="mistake-icon">📤</div>
+        <div class="mistake-title">שליחת מידע רגיש</div>
+        <div class="mistake-desc">שליחת קבצים רגישים למייל אישי, WhatsApp או שירותי ענן לא מאושרים.</div>
+      </div>
+    </div>
+
+    <h2 class="section-h">כיצד לבנות תוכנית הדרכה אפקטיבית</h2>
+    <div class="training-step">
+      <div class="step-title">1. הדרכה ראשונית לכל עובד חדש</div>
+      <div class="step-desc">כל עובד שמצטרף לארגון מקבל הדרכת אבטחה בסיסית לפני שמקבל גישה למערכות. כולל: מדיניות סיסמאות, זיהוי פישינג, נהלי דיווח.</div>
+    </div>
+    <div class="training-step">
+      <div class="step-title">2. הדרכות תקופתיות — אחת לרבעון</div>
+      <div class="step-desc">לא מספיק פעם אחת. האיומים משתנים, ועובדים שוכחים. הדרכות קצרות (15-30 דקות) אחת לרבעון שומרות על מודעות גבוהה לאורך זמן.</div>
+    </div>
+    <div class="training-step">
+      <div class="step-title">3. סימולציות פישינג מבוקרות</div>
+      <div class="step-desc">שלח מיילי פישינג מדומים לעובדים — בלי שידעו שזה תרגיל. עובד שנופל מקבל הדרכה מיידית. זה הכלי האפקטיבי ביותר להעלאת מודעות.</div>
+    </div>
+    <div class="training-step">
+      <div class="step-title">4. נוהל דיווח ברור</div>
+      <div class="step-desc">עובד שמזהה משהו חשוד — צריך לדעת למי לדווח ואיך. הגדר ערוץ דיווח פשוט. עובד שמדווח הוא עובד שמגן על הארגון.</div>
+    </div>
+    <div class="training-step">
+      <div class="step-title">5. תרבות ולא עונש</div>
+      <div class="step-desc">עובד שמדווח על טעות לא צריך לפחד מענישה. תרבות ארגונית שמעודדת דיווח גלוי — עדיפה על תרבות שבה עובדים מסתירים טעויות.</div>
+    </div>
+
+    <h2 class="section-h">נושאי הדרכה חיוניים</h2>
+    <div class="topics-grid">
+      <div class="topic-card">
+        <div class="topic-icon">🎣</div>
+        <div class="topic-title">זיהוי פישינג</div>
+        <div class="topic-desc">כיצד לזהות מיילים, SMS והודעות מזויפות — עם דוגמאות אמיתיות.</div>
+      </div>
+      <div class="topic-card">
+        <div class="topic-icon">🔑</div>
+        <div class="topic-title">ניהול סיסמאות</div>
+        <div class="topic-desc">סיסמאות חזקות, מנהל סיסמאות, MFA — ויישומם בפועל.</div>
+      </div>
+      <div class="topic-card">
+        <div class="topic-icon">📱</div>
+        <div class="topic-title">שימוש בטוח במכשירים</div>
+        <div class="topic-desc">נעילת מסך, WiFi ציבורי, הפרדת מכשיר עבודה ופרטי.</div>
+      </div>
+      <div class="topic-card">
+        <div class="topic-icon">☁️</div>
+        <div class="topic-title">טיפול במידע רגיש</div>
+        <div class="topic-desc">מה מותר ומה אסור לשלוח, שמירה נכונה של קבצים רגישים.</div>
+      </div>
+      <div class="topic-card">
+        <div class="topic-icon">🚨</div>
+        <div class="topic-title">תגובה לאירועים</div>
+        <div class="topic-desc">מה לעשות אם לחצת על קישור חשוד — דיווח מיידי ונהלי תגובה.</div>
+      </div>
+      <div class="topic-card">
+        <div class="topic-icon">🔒</div>
+        <div class="topic-title">אבטחה פיזית</div>
+        <div class="topic-desc">נעילת מחשב, סילוק מסמכים, אבטחת הכניסה למשרד.</div>
+      </div>
+    </div>
+
+    <h2 class="section-h">בניית תרבות אבטחה ארגונית</h2>
+    <ul class="culture-list">
+      <li>🏆 <div><strong>הנהגה מלמעלה</strong> — כשמנהלים בכירים משתתפים בהדרכות, העובדים מבינים שזה רציני.</div></li>
+      <li>📊 <div><strong>מדידה ומשוב</strong> — בדוק כמה עובדים נפלו בסימולציית פישינג, עקוב אחרי שיפור לאורך זמן.</div></li>
+      <li>🎯 <div><strong>הדרכה ממוקדת תפקיד</strong> — צוות כספים מקבל הדרכה על BEC, צוות IT מקבל הדרכה מעמיקה יותר.</div></li>
+      <li>📢 <div><strong>עדכוני אבטחה שוטפים</strong> — שלח עדכון חודשי קצר על איומים חדשים ומקרים שקרו בתעשייה.</div></li>
+      <li>✅ <div><strong>הכרה בהתנהגות נכונה</strong> — עובד שדיווח על מייל חשוד? הכר בזה. חיזוק חיובי עובד.</div></li>
+    </ul>
+
+    <div class="tip-box">
+      <strong>✅ נקודת התחלה מעשית</strong>
+      <p>שלח לכל עובד מייל עם 3 כללים בלבד: 1) אל תלחץ על קישורים בלי לבדוק. 2) סיסמה ייחודית לכל מערכת. 3) מחשב נעול תמיד כשאתה עוזב. שלושה כללים פשוטים יכולים למנוע 80% מהפרצות.</p>
+    </div>
+
+    <div class="summary-box">
+      <h3>רוצה להכשיר את הצוות שלך?</h3>
+      <p>MorOfSec מציעה הדרכות אבטחה מותאמות לארגון — כולל סימולציות פישינג, סדנאות מעשיות ובניית תרבות אבטחה.</p>
+      <a href="index.html#contact">צור קשר לייעוץ</a>
+    </div>
+
+    <div class="back-section">
+      <a href="articles.html" class="back-link">&#8592; חזרה לכל המאמרים</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 MorOfSec | <a href="mailto:morofsec74@gmail.com">morofsec74@gmail.com</a> | <a href="tel:+972584577520">058-457-7520</a></p>
+</footer>
+</body>
+</html>

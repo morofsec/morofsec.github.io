@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MorOfSec | אבטחת מידע, בדיקות חדירה ושירותי IT - רמת גן</title>
+<meta name="description" content="MorOfSec - שירותי אבטחת מידע ו-IT ברמת גן, בני ברק, תל אביב, פתח תקווה.">
+<meta name="keywords" content="אבטחת מידע, בדיקות חדירה, סייבר, IT, רמת גן, בני ברק">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://morofsec.com/">
+
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--cyan:#005f8a;--teal:#00885a;--bg:#f0f4f8;--white:#fff;--text:#333;--accent:#0077aa}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Heebo',sans-serif;background-color:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;background:#f0f4f8}
+header{background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);padding:1rem 5%;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 15px rgba(0,0,0,0.05)}
+.logo{font-family:'Orbitron',sans-serif;font-size:1.8rem;font-weight:900;color:var(--cyan);text-decoration:none;letter-spacing:-1px}
+.logo span{color:var(--teal)}
+nav a{margin-right:1.5rem;text-decoration:none;color:var(--text);font-weight:500;transition:0.3s}
+nav a:hover{color:var(--cyan)}
+.hero{height:80vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 5%}
+.hero-content{max-width:900px;background:rgba(255,255,255,0.8);padding:3rem;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.05);border:1px solid rgba(255,255,255,0.5)}
+.hero h1{font-family:'Orbitron',sans-serif;font-size:3.5rem;margin-bottom:1rem;color:var(--cyan);line-height:1.1}
+.hero p{font-size:1.4rem;color:#555;margin-bottom:2rem}
+.dots{display:flex;justify-content:center;gap:10px;margin-top:20px}
+.dot{width:12px;height:12px;border-radius:50%;background:#ccc;cursor:pointer;transition:0.3s}
+.dot.active{background:var(--cyan);transform:scale(1.3)}
+.services{padding:5rem 5%;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem}
+.service-card{background:var(--white);padding:2.5rem;border-radius:15px;box-shadow:0 5px 20px rgba(0,0,0,0.03);transition:0.4s;cursor:pointer;border-bottom:4px solid transparent;position:relative;overflow:hidden}
+.service-card:hover{transform:translateY(-10px);border-color:var(--cyan);box-shadow:0 15px 35px rgba(0,0,0,0.1)}
+.service-card h3{margin-bottom:1rem;font-size:1.5rem;color:var(--cyan)}
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);display:none;justify-content:center;align-items:center;z-index:1000;backdrop-filter:blur(5px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--white);padding:3rem;border-radius:20px;max-width:600px;width:90%;position:relative;box-shadow:0 25px 50px rgba(0,0,0,0.3)}
+.modal-close{position:absolute;top:1.5rem;left:1.5rem;background:none;border:none;font-size:2rem;cursor:pointer;color:#999}
+.modal h2{color:var(--cyan);margin-bottom:1rem;font-family:'Orbitron',sans-serif}
+.modal ul{margin:1.5rem 0;padding-right:1.5rem}
+.modal li{margin-bottom:0.8rem}
+footer{text-align:center;padding:3rem;background:#fff;margin-top:4rem;font-size:0.9rem;color:#888}
+@media (max-width:768px){.hero h1{font-size:2.2rem}.hero-content{padding:1.5rem}}
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<header>
+    <a href="/" class="logo">MorOf<span>Sec</span></a>
+    <nav>
+        <a href="#services">שירותים</a>
+        <a href="article-employee-awareness.html">מאמרים</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <div id="slide1">
+            <h1>אבטחת מידע וסייבר</h1>
+            <p>פתרונות הגנה מתקדמים, בדיקות חדירה וייעוץ טכנולוגי לעסקים שרוצים לישון בשקט.</p>
+        </div>
+        <div id="slide2" style="display:none;">
+            <h1>שירותי IT מנוהלים</h1>
+            <p>תשתית טכנולוגית חזקה, תמיכה וניהול רשתות ברמה הגבוהה ביותר.</p>
+        </div>
+        <div class="dots">
+            <div id="hdot0" class="dot active"></div>
+            <div id="hdot1" class="dot"></div>
+        </div>
+    </div>
+</section>
+
+<section class="services" id="services">
+    <div class="service-card" data-service="penetration">
+        <h3>בדיקות חדירה (PT)</h3>
+        <p>זיהוי נקודות תורפה במערכת לפני שהאקרים ימצאו אותן.</p>
+    </div>
+    <div class="service-card" data-service="incident">
+        <h3>תגובה לאירוע</h3>
+        <p>ליווי וטיפול באירועי סייבר בזמן אמת וחזרה מהירה לשגרה.</p>
+    </div>
+    <div class="service-card" data-service="compliance">
+        <h3>רגולציה ותקנים</h3>
+        <p>הכנה לתקני אבטחה (ISO, SOC2) ועמידה בדרישות החוק.</p>
+    </div>
+    <div class="service-card" data-service="consulting">
+        <h3>ייעוץ אסטרטגי</h3>
+        <p>בניית תוכנית אבטחה מותאמת אישית לצורכי הארגון שלכם.</p>
+    </div>
+</section>
+
+<div class="modal-overlay" id="modal-overlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true">
+        <button class="modal-close" id="modal-close" aria-label="סגור">&times;</button>
+        <span id="modal-label" style="color:var(--teal); font-weight:bold; text-transform:uppercase; font-size:0.9rem;"></span>
+        <h2 id="modal-title"></h2>
+        <p id="modal-desc"></p>
+        <ul id="modal-list"></ul>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2024 MorOfSec - מומחים באבטחת מידע ושירותי IT. רמת גן והסביבה.</p>
+</footer>
+
+<script src="main.js"></script>
+
+</body>
+</html>

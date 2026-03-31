@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מאמרים ומדריכים | MorOfSec</title>
+<meta name="description" content="מאמרים ומדריכים מקצועיים על אבטחת מידע, סייבר והגנת פרטיות מאת MorOfSec">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://morofsec.com/articles.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&family=Orbitron:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#f0f4f8;--bg2:#e8edf3;--white:#fff;--heading:#0a1e2e;--text:#1a3040;--muted:#2d5068;--cyan:#005f8a;--teal:#00886a;--border:#d0dce8;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Heebo',sans-serif;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+nav{position:fixed;top:0;width:100%;z-index:100;padding:18px 0;backdrop-filter:blur(20px);border-bottom:1px solid var(--border);background:rgba(240,244,248,0.95);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;padding:0 40px;}
+.nav-logo{font-family:'Orbitron',monospace;font-size:1.4rem;font-weight:900;color:var(--heading);letter-spacing:2px;display:flex;align-items:center;gap:10px;}
+.nav-logo img{width:36px;height:36px;object-fit:contain;border-radius:50%;border:2px solid var(--cyan);background:var(--white);}
+.nav-logo span{color:var(--cyan);}
+.nav-back{display:flex;align-items:center;gap:8px;color:var(--cyan);font-weight:600;font-size:0.9rem;}
+.nav-back:hover{text-decoration:underline;}
+.articles-hero{padding:120px 0 60px;text-align:center;background:linear-gradient(135deg,#0a1e2e 0%,#1a3a52 100%);color:#fff;}
+.articles-hero .section-label{font-family:'Orbitron',monospace;font-size:0.75rem;letter-spacing:4px;color:var(--cyan);text-transform:uppercase;margin-bottom:16px;font-weight:700;}
+.articles-hero h1{font-family:'Orbitron',monospace;font-size:2rem;font-weight:900;margin-bottom:16px;line-height:1.3;}
+.articles-hero h1 span{color:var(--cyan);}
+.articles-hero p{font-size:1rem;color:rgba(255,255,255,0.75);max-width:560px;margin:0 auto;line-height:1.8;}
+.articles-section{padding:60px 0 80px;}
+.container{max-width:1200px;margin:0 auto;padding:0 40px;}
+.articles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.article-card{background:var(--white);border:2px solid var(--border);border-radius:10px;overflow:hidden;transition:transform 0.3s,border-color 0.3s,box-shadow 0.3s;}
+.article-card.ready{cursor:pointer;}
+.article-card.ready:hover{transform:translateY(-6px);border-color:var(--cyan);box-shadow:0 12px 40px rgba(0,95,138,0.12);}
+.card-header{padding:28px 24px 20px;border-bottom:1px solid var(--border);}
+.card-icon{font-size:2.2rem;margin-bottom:12px;}
+.card-tag{display:inline-block;background:rgba(0,95,138,0.08);color:var(--cyan);font-size:0.72rem;font-weight:700;letter-spacing:2px;padding:4px 10px;border-radius:20px;font-family:'Orbitron',monospace;text-transform:uppercase;margin-bottom:10px;}
+.card-title{font-family:'Orbitron',monospace;font-size:0.88rem;font-weight:800;color:var(--heading);line-height:1.4;}
+.card-body{padding:20px 24px 24px;}
+.card-desc{font-size:0.88rem;color:var(--text);line-height:1.8;margin-bottom:18px;font-weight:500;}
+.card-link{display:inline-flex;align-items:center;gap:8px;color:var(--cyan);font-weight:700;font-size:0.85rem;font-family:'Orbitron',monospace;letter-spacing:1px;}
+.card-soon{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-size:0.82rem;font-weight:600;background:var(--bg2);padding:6px 14px;border-radius:20px;}
+.articles-footer{background:var(--heading);color:rgba(255,255,255,0.6);text-align:center;padding:28px;font-size:0.85rem;}
+.articles-footer a{color:var(--cyan);}
+@media(max-width:900px){.articles-grid{grid-template-columns:repeat(2,1fr);}.articles-hero h1{font-size:1.5rem;}}
+@media(max-width:600px){.articles-grid{grid-template-columns:1fr;}.nav-inner,.container{padding:0 16px;}.articles-hero{padding:100px 16px 48px;}.articles-hero h1{font-size:1.3rem;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><img src="images/logo_small.png" alt="">Mor<span>Of</span>Sec</a>
+    <a href="index.html" class="nav-back">&#8592; חזרה לאתר הראשי</a>
+  </div>
+</nav>
+<section class="articles-hero">
+  <div class="container">
+    <div class="section-label">// ידע הוא כוח</div>
+    <h1>מאמרים ו<span>מדריכים</span> מקצועיים</h1>
+    <p>תוכן מקצועי ומעשי בנושאי אבטחת מידע, סייבר והגנת פרטיות — מאת אופיר שמשון, MorOfSec</p>
+  </div>
+</section>
+<section class="articles-section">
+  <div class="container">
+    <div class="articles-grid">
+      <article class="article-card ready" onclick="location.href='article-security-mistakes.html'">
+        <div class="card-header">
+          <div class="card-icon">⚠️</div>
+          <div class="card-tag">כללי</div>
+          <h2 class="card-title">טעויות אבטחת מידע נפוצות</h2>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">8 טעויות שאנשים ועסקים עושים שוב ושוב — וכיצד להימנע מהן.</p>
+          <a href="article-security-mistakes.html" class="card-link">קרא את המאמר &#8594;</a>
+        </div>
+      </article>
+      <article class="article-card ready" onclick="location.href='article-phishing.html'">
+        <div class="card-header">
+          <div class="card-icon">🎣</div>
+          <div class="card-tag">איומים</div>
+          <h2 class="card-title">מתקפות פישינג</h2>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">סימנים לזיהוי, דוגמאות אמיתיות, כיצד ללמד עובדים וכלי הגנה.</p>
+          <a href="article-phishing.html" class="card-link">קרא את המאמר &#8594;</a>
+        </div>
+      </article>
+      <article class="article-card ready" onclick="location.href='article-digital-privacy.html'">
+        <div class="card-header">
+          <div class="card-icon">🔐</div>
+          <div class="card-tag">פרטיות</div>
+          <h2 class="card-title">הגנה על פרטיות דיגיטלית</h2>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">הגדרות פרטיות ברשתות חברתיות ומתי VPN באמת עוזר.</p>
+          <a href="article-digital-privacy.html" class="card-link">קרא את המאמר &#8594;</a>
+        </div>
+      </article>
+      <article class="article-card ready" onclick="location.href='article-backups.html'">
+        <div class="card-header">
+          <div class="card-icon">☁️</div>
+          <div class="card-tag">גיבוי</div>
+          <h2 class="card-title">גיבויים</h2>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">ענן מול מקומי, כלל 3-2-1, טעויות נפוצות ומדיניות גיבוי לעסק.</p>
+          <a href="article-backups.html" class="card-link">קרא את המאמר &#8594;</a>
+        </div>
+      </article>
+      <article class="article-card ready" onclick="location.href='article-passwords.html'">
+        <div class="card-header">
+          <div class="card-icon">🔑</div>
+          <div class="card-tag">סיסמאות</div>
+          <h2 class="card-title">סיסמאות ואימות</h2>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">מנהלי סיסמאות, יצירת סיסמה חזקה ואפליקציות Authentication.</p>
+          <a href="article-passwords.html" class="card-link">קרא את המאמר &#8594;</a>
+        </div>
+      </article>
+      <article class="article-card ready" onclick="location.href='article-network-security.html'">
+        <div class="card-header">
+          <div class="card-icon">📡</div>
+          <div class="card-tag">רשת</div>
+          <h2 class="card-title">אבטחת רשת ביתית ומשרדית</h2>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">סיסמת נתב, WPA3, הפרדת רשת אורחים וניטור תעבורה.</p>
+          <a href="article-network-security.html" class="card-link">קרא את המאמר &#8594;</a>
+        </div>
+      </article>
+      <article class="article-card ready" onclick="location.href='article-mobile-security.html'">
+        <div class="card-header">
+          <div class="card-icon">📱</div>
+          <div class="card-tag">סלולרי</div>
+          <h2 class="card-title">אבטחת מידע בסלולרי</h2>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">אפליקציות מזויפות, הרשאות מסוכנות ועדכוני מערכת הפעלה.</p>
+          <a href="article-mobile-security.html" class="card-link">קרא את המאמר &#8594;</a>
+        </div>
+      </article>
+      <article class="article-card ready" onclick="location.href='article-attack-types.html'">
+        <div class="card-header">
+          <div class="card-icon">💥</div>
+          <div class="card-tag">מתקפות</div>
+          <h2 class="card-title">סוגי מתקפות סייבר</h2>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">MITM, Rootkits, Botnets, IP Spoofing, DDoS ו-DNS Spoofing.</p>
+          <a href="article-attack-types.html" class="card-link">קרא את המאמר &#8594;</a>
+        </div>
+      </article>
+      <article class="article-card ready" onclick="location.href='article-browser-extensions.html'">
+        <div class="card-header">
+          <div class="card-icon">🧩</div>
+          <div class="card-tag">דפדפן</div>
+          <h2 class="card-title">תוספי דפדפן והרשאות</h2>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">כיצד תוספים זדוניים גונבים מידע ואיך לבחור תוספים בטוחים.</p>
+          <a href="article-browser-extensions.html" class="card-link">קרא את המאמר &#8594;</a>
+        </div>
+      </article>
+      <article class="article-card ready" onclick="location.href='article-employee-awareness.html'">
+        <div class="card-header">
+          <div class="card-icon">👥</div>
+          <div class="card-tag">הדרכה</div>
+          <h2 class="card-title">מודעות עובדים</h2>
+        </div>
+        <div class="card-body">
+          <p class="card-desc">95% מהפרצות נגרמות בטעות אנוש — כיצד להכשיר עובדים.</p>
+          <a href="article-employee-awareness.html" class="card-link">קרא את המאמר &#8594;</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+<footer class="articles-footer">
+  <p>© 2026 MorOfSec | <a href="/cdn-cgi/l/email-protection#b6dbd9c4d9d0c5d3d58182f6d1dbd7dfda98d5d9db"><span class="__cf_email__" data-cfemail="6d00021f020b1e080

@@ -628,5 +628,6 @@ var heroIdx=0,heroTimer=setInterval(function(){heroSlide(heroIdx===0?1:0);},4000
 function heroSlide(n){var s1=document.getElementById('slide1'),s2=document.getElementById('slide2'),d0=document.getElementById('hdot0'),d1=document.getElementById('hdot1');if(!s1||!s2)return;heroIdx=n;s1.style.display=n===0?'block':'none';s2.style.display=n===1?'block':'none';if(d0)d0.style.background=n===0?'#005f8a':'transparent';if(d1)d1.style.background=n===1?'#005f8a':'transparent';clearInterval(heroTimer);heroTimer=setInterval(function(){heroSlide(heroIdx===0?1:0);},4000);}
 
 </script>
+  <script src="main.js" defer></script>
 </body>
 </html>

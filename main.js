@@ -37,11 +37,11 @@ document.getElementById('btn-contrast').addEventListener('click',function(){
   this.setAttribute('aria-pressed', String(on));
 });
 document.getElementById('btn-larger').addEventListener('click',function(){
-  if(_fontSize < 150){ _fontSize += 10; document.body.style.fontSize = _fontSize + '%'; }
+  if(_fontSize < 150){ _fontSize += 10; document.documentElement.style.fontSize = _fontSize + '%'; }
   this.setAttribute('aria-pressed', _fontSize > 100 ? 'true' : 'false');
 });
 document.getElementById('btn-smaller').addEventListener('click',function(){
-  if(_fontSize > 80){ _fontSize -= 10; document.body.style.fontSize = _fontSize + '%'; }
+  if(_fontSize > 80){ _fontSize -= 10; document.documentElement.style.fontSize = _fontSize + '%'; }
   this.setAttribute('aria-pressed', _fontSize < 100 ? 'true' : 'false');
 });
 document.getElementById('btn-links').addEventListener('click',function(){

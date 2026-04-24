@@ -217,6 +217,7 @@ footer{background:var(--bg3);border-top:1px solid var(--border);padding:55px 0 2
 .a11y-feature::before{content:'✓';color:var(--teal);font-weight:800;flex-shrink:0;}
 .a11y-contact-box{background:var(--white);border:2px solid var(--cyan);border-radius:6px;padding:24px 28px;margin-top:12px;}
 .a11y-contact-box p{font-size:0.92rem;color:var(--text);line-height:1.85;font-weight:500;}
+@media(max-width:900px){.mobile-cta{display:block;}}
 @media(max-width:900px){
   .hamburger{display:flex;}
   .mobile-cta{display:block;}

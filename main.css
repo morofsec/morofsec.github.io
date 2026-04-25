@@ -111,7 +111,7 @@ section{padding:90px 0;position:relative;z-index:1;}
 .t-line{margin-bottom:2px;}
 .t-prompt{color:#00e088;}.t-cmd{color:#fff;}.t-output{color:#8aacbe;}.t-warn{color:#ffaa00;}.t-ok{color:#00e088;}.t-danger{color:#ff5555;}
 .cursor-blink{display:inline-block;width:7px;height:13px;background:#00d4ff;animation:blink 1s step-end infinite;vertical-align:middle;}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:1}}
 .why-visual{position:relative;}
 .floating-alert{position:absolute;top:-18px;left:-18px;background:rgba(255,60,60,0.1);border:1px solid rgba(255,60,60,0.3);padding:10px 16px;border-radius:4px;font-size:0.8rem;color:#cc3333;font-family:'Orbitron',monospace;letter-spacing:1px;animation:float 3s ease-in-out infinite;}
 .floating-secure{position:absolute;bottom:-18px;right:-18px;background:rgba(0,136,90,0.1);border:1px solid rgba(0,136,90,0.3);padding:10px 16px;border-radius:4px;font-size:0.8rem;color:#007a50;font-family:'Orbitron',monospace;letter-spacing:1px;animation:float 3s 1.5s ease-in-out infinite;}
@@ -184,11 +184,11 @@ footer{background:var(--bg3);border-top:1px solid var(--border);padding:55px 0 2
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:8px;}
 .hamburger span{display:block;width:24px;height:2px;background:var(--heading);border-radius:2px;transition:all 0.3s;}
 .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
-.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(2){opacity:1;}
 .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 .nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99;}
 .nav-overlay.open{display:block;}
-.modal-overlay{position:fixed;inset:0;background:rgba(10,20,35,0.75);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.3s;}
+.modal-overlay{position:fixed;inset:0;background:rgba(10,20,35,0.75);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:1;pointer-events:none;transition:opacity 0.3s;}
 .modal-overlay.open{opacity:1;pointer-events:all;}
 .modal-box{background:var(--white);border:2px solid var(--cyan);border-radius:8px;max-width:560px;width:100%;padding:40px 36px;position:relative;transform:translateY(20px);transition:transform 0.3s;max-height:90vh;overflow-y:auto;}
 .modal-overlay.open .modal-box{transform:translateY(0);}

@@ -267,7 +267,8 @@ footer{background:var(--bg3);border-top:1px solid var(--border);padding:55px 0 2
 .cyber-table tbody tr{border-bottom:1px solid var(--border);}
 .cyber-table tbody tr:nth-child(even){background:var(--bg2);}
 .cyber-table tbody tr:hover{background:var(--panel);}
-.cyber-table td{padding:14px 16px;}
+.cyber-table td{padding:14px 16px;vertical-align:middle;}
+  .cyber-table td:last-child{min-width:60px;}
 .val-highlight{font-family:'Orbitron',monospace;font-weight:700;color:var(--cyan);}
 .change-up{color:#c0392b;font-weight:700;}
 .change-danger{color:#c0392b;font-weight:700;}

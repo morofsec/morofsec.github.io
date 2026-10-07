@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="40%" r="75%">
+      <stop offset="0%" stop-color="#dceefa"/>
+      <stop offset="100%" stop-color="#aacde8"/>
+    </radialGradient>
+    <linearGradient id="wallGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#5b8fa8"/>
+      <stop offset="100%" stop-color="#2d5f7a"/>
+    </linearGradient>
+    <linearGradient id="towerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#6a9dba"/>
+      <stop offset="100%" stop-color="#325f78"/>
+    </linearGradient>
+    <linearGradient id="folderGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffd166"/>
+      <stop offset="100%" stop-color="#f4a620"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#00446a" flood-opacity="0.2"/>
+    </filter>
+    <filter id="folderShadow">
+      <feDropShadow dx="2" dy="4" stdDeviation="5" flood-color="#c47a00" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Sky background -->
+  <rect width="600" height="400" fill="url(#bgGrad)"/>
+
+  <!-- Clouds -->
+  <ellipse cx="90" cy="60" rx="50" ry="22" fill="white" opacity="0.7"/>
+  <ellipse cx="130" cy="50" rx="40" ry="18" fill="white" opacity="0.7"/>
+  <ellipse cx="60" cy="65" rx="30" ry="16" fill="white" opacity="0.7"/>
+
+  <ellipse cx="490" cy="50" rx="55" ry="22" fill="white" opacity="0.6"/>
+  <ellipse cx="530" cy="40" rx="38" ry="17" fill="white" opacity="0.6"/>
+  <ellipse cx="460" cy="58" rx="32" ry="15" fill="white" opacity="0.6"/>
+
+  <!-- Ground -->
+  <ellipse cx="300" cy="330" rx="260" ry="18" fill="#7aafca" opacity="0.4"/>
+  <rect x="0" y="325" width="600" height="75" fill="#b8d9eb"/>
+  <rect x="0" y="325" width="600" height="5" fill="#7aafca" opacity="0.5"/>
+
+  <!-- Grass -->
+  <ellipse cx="300" cy="326" rx="270" ry="12" fill="#8fc9a0" opacity="0.6"/>
+
+  <!-- === CASTLE === -->
+
+  <!-- Main wall -->
+  <rect x="110" y="220" width="380" height="110" fill="url(#wallGrad)" filter="url(#shadow)" stroke="#2a5570" stroke-width="1"/>
+  <!-- Wall shading -->
+  <rect x="110" y="220" width="380" height="20" fill="rgba(255,255,255,0.1)"/>
+
+  <!-- Wall battlements -->
+  <rect x="110" y="203" width="28" height="22" rx="2" fill="url(#wallGrad)" stroke="#2a5570" stroke-width="1"/>
+  <rect x="152" y="203" width="28" height="22" rx="2" fill="url(#wallGrad)" stroke="#2a5570" stroke-width="1"/>
+  <rect x="194" y="203" width="28" height="22" rx="2" fill="url(#wallGrad)" stroke="#2a5570" stroke-width="1"/>
+  <rect x="236" y="203" width="28" height="22" rx="2" fill="url(#wallGrad)" stroke="#2a5570" stroke-width="1"/>
+  <rect x="278" y="203" width="28" height="22" rx="2" fill="url(#wallGrad)" stroke="#2a5570" stroke-width="1"/>
+  <rect x="320" y="203" width="28" height="22" rx="2" fill="url(#wallGrad)" stroke="#2a5570" stroke-width="1"/>
+  <rect x="362" y="203" width="28" height="22" rx="2" fill="url(#wallGrad)" stroke="#2a5570" stroke-width="1"/>
+  <rect x="404" y="203" width="28" height="22" rx="2" fill="url(#wallGrad)" stroke="#2a5570" stroke-width="1"/>
+  <rect x="446" y="203" width="28" height="22" rx="2" fill="url(#wallGrad)" stroke="#2a5570" stroke-width="1"/>
+  <rect x="462" y="203" width="28" height="22" rx="2" fill="url(#wallGrad)" stroke="#2a5570" stroke-width="1"/>
+
+  <!-- Left Tower -->
+  <rect x="68" y="148" width="82" height="182" fill="url(#towerGrad)" stroke="#2a5570" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="68" y="148" width="82" height="18" fill="rgba(255,255,255,0.12)"/>
+  <!-- Left battlements -->
+  <rect x="68" y="128" width="22" height="24" rx="2" fill="url(#towerGrad)" stroke="#2a5570" stroke-width="1"/>
+  <rect x="98" y="128" width="22" height="24" rx="2" fill="url(#towerGrad)" stroke="#2a5570" stroke-width="1"/>
+  <rect x="128" y="128" width="22" height="24" rx="2" fill="url(#towerGrad)" stroke="#2a5570" stroke-width="1"/>
+  <!-- Left windows -->
+  <rect x="92" y="168" width="26" height="38" rx="13" fill="#1a4a6a" stroke="#5b98b8" stroke-width="1.5"/>
+  <rect x="94" y="170" width="22" height="34" rx="11" fill="#ffeaa0" opacity="0.3"/>
+  <rect x="92" y="232" width="26" height="32" rx="13" fill="#1a4a6a" stroke="#5b98b8" stroke-width="1.5"/>
+
+  <!-- Right Tower -->
+  <rect x="450" y="148" width="82" height="182" fill="url(#towerGrad)" stroke="#2a5570" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="450" y="148" width="82" height="18" fill="rgba(255,255,255,0.12)"/>
+  <!-- Right battlements -->
+  <rect x="450" y="128" width="22" height="24" rx="2" fill="url(#towerGrad)" stroke="#2a5570" stroke-width="1"/>
+  <rect x="480" y="128" width="22" height="24" rx="2" fill="url(#towerGrad)" stroke="#2a5570" stroke-width="1"/>
+  <rect x="510" y="128" width="22" height="24" rx="2" fill="url(#towerGrad)" stroke="#2a5570" stroke-width="1"/>
+  <!-- Right windows -->
+  <rect x="482" y="168" width="26" height="38" rx="13" fill="#1a4a6a" stroke="#5b98b8" stroke-width="1.5"/>
+  <rect x="484" y="170" width="22" height="34" rx="11" fill="#ffeaa0" opacity="0.3"/>
+  <rect x="482" y="232" width="26" height="32" rx="13" fill="#1a4a6a" stroke="#5b98b8" stroke-width="1.5"/>
+
+  <!-- Center Tower -->
+  <rect x="220" y="100" width="160" height="230" fill="url(#towerGrad)" stroke="#2a5570" stroke-width="1.5" filter="url(#shadow)"/>
+  <rect x="220" y="100" width="160" height="20" fill="rgba(255,255,255,0.15)"/>
+  <!-- Center battlements -->
+  <rect x="220" y="78" width="28" height="26" rx="2" fill="url(#towerGrad)" stroke="#2a5570" stroke-width="1"/>
+  <rect x="258" y="78" width="28" height="26" rx="2" fill="url(#towerGrad)" stroke="#2a5570" stroke-width="1"/>
+  <rect x="296" y="78" width="28" height="26" rx="2" fill="url(#towerGrad)" stroke="#2a5570" stroke-width="1"/>
+  <rect x="334" y="78" width="28" height="26" rx="2" fill="url(#towerGrad)" stroke="#2a5570" stroke-width="1"/>
+  <rect x="352" y="78" width="28" height="26" rx="2" fill="url(#towerGrad)" stroke="#2a5570" stroke-width="1"/>
+
+  <!-- Center tower arch window -->
+  <rect x="272" y="118" width="56" height="70" rx="28" fill="#1a4a6a" stroke="#5b98b8" stroke-width="2"/>
+  <rect x="275" y="121" width="50" height="64" rx="25" fill="#ffeaa0" opacity="0.2"/>
+
+  <!-- Gate arch -->
+  <rect x="258" y="258" width="84" height="72" rx="6" fill="#1a2e40" stroke="#2a5570" stroke-width="2"/>
+  <path d="M258 270 Q300 248 342 270" fill="#1a2e40" stroke="#2a5570" stroke-width="2"/>
+  <!-- Gate bars -->
+  <line x1="278" y1="258" x2="278" y2="330" stroke="#3a6a88" stroke-width="2" opacity="0.7"/>
+  <line x1="300" y1="252" x2="300" y2="330" stroke="#3a6a88" stroke-width="2" opacity="0.7"/>
+  <line x1="322" y1="258" x2="322" y2="330" stroke="#3a6a88" stroke-width="2" opacity="0.7"/>
+  <line x1="258" y1="282" x2="342" y2="282" stroke="#3a6a88" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- === FOLDER with lock in front === -->
+  <!-- Folder body -->
+  <g filter="url(#folderShadow)">
+    <!-- Folder tab -->
+    <path d="M148 290 L148 268 Q148 262 154 262 L192 262 Q196 262 198 266 L204 274 L420 274 Q426 274 426 280 L426 350 Q426 356 420 356 L154 356 Q148 356 148 350 Z" fill="url(#folderGrad)" stroke="#c47a00" stroke-width="1.5"/>
+    <!-- Folder highlight -->
+    <rect x="148" y="274" width="278" height="12" fill="rgba(255,255,255,0.2)" rx="0"/>
+  </g>
+
+  <!-- Folder text "סיסמאות" -->
+  <text x="287" y="322" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="bold" fill="#5a3200" opacity="0.85">סיסמאות</text>
+  <!-- Password dots -->
+  <circle cx="230" cy="340" r="5" fill="#8a5000" opacity="0.5"/>
+  <circle cx="248" cy="340" r="5" fill="#8a5000" opacity="0.5"/>
+  <circle cx="266" cy="340" r="5" fill="#8a5000" opacity="0.5"/>
+  <circle cx="284" cy="340" r="5" fill="#8a5000" opacity="0.5"/>
+  <circle cx="302" cy="340" r="5" fill="#8a5000" opacity="0.5"/>
+  <circle cx="320" cy="340" r="5" fill="#8a5000" opacity="0.5"/>
+
+  <!-- Lock on folder -->
+  <rect x="272" y="252" width="56" height="44" rx="8" fill="#2a5570" stroke="#5b98b8" stroke-width="2"/>
+  <path d="M284 252 L284 238 Q284 222 300 222 Q316 222 316 238 L316 252" fill="none" stroke="#2a5570" stroke-width="8" stroke-linecap="round"/>
+  <path d="M284 252 L284 238 Q284 222 300 222 Q316 222 316 238 L316 252" fill="none" stroke="#5b98b8" stroke-width="5" stroke-linecap="round"/>
+  <!-- Keyhole -->
+  <circle cx="300" cy="270" r="7" fill="#1a3a50"/>
+  <rect x="297" y="270" width="6" height="10" rx="2" fill="#1a3a50"/>
+
+  <!-- Title -->
+  <text x="300" y="36" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="bold" fill="#1a3a55" letter-spacing="2">MorOfSec — הגנה על סיסמאות</text>
+</svg>
